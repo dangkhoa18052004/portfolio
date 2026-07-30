@@ -1389,19 +1389,45 @@ button {
   to { transform: translateX(0); opacity: 1; }
 }
 
-/* --- Responsive Media Queries --- */
+/* --- Responsive Media Queries (Mobile & Tablet Optimization) --- */
 @media (max-width: 992px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+  
+  .section-padding {
+    padding: 4rem 0;
+  }
+  
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + 1.5rem);
+    padding-bottom: 3rem;
+  }
+
   .hero-grid, .about-grid, .timeline-grid, .contact-grid {
     grid-template-columns: 1fr;
+    gap: 2.25rem;
   }
   
   .hero-visual {
     order: -1;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
-  
+
+  .avatar-wrapper {
+    width: min(280px, 75vw);
+    height: min(280px, 75vw);
+    margin: 0 auto;
+  }
+
+  .avatar-img {
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
   .hero-title {
-    font-size: 2.75rem;
+    font-size: clamp(2.25rem, 6.5vw, 3rem);
   }
   
   .nav-menu {
@@ -1409,14 +1435,24 @@ button {
     top: var(--header-height);
     right: -100%;
     width: 80%;
-    max-width: 320px;
+    max-width: 300px;
     height: calc(100vh - var(--header-height));
     background: var(--bg-secondary);
+    backdrop-filter: blur(16px);
     border-left: 1px solid var(--border-color);
     flex-direction: column;
-    padding: 2.5rem 1.5rem;
-    gap: 1.5rem;
+    padding: 2rem 1.25rem;
+    gap: 1rem;
     transition: right var(--transition-normal);
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav-link {
+    font-size: 1.05rem;
+    padding: 0.6rem 0;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
   }
   
   .nav-menu.active {
@@ -1424,25 +1460,139 @@ button {
   }
   
   .mobile-menu-btn {
-    display: block;
+    display: flex;
+  }
+
+  .floating-tech-badge {
+    display: none; /* Hide floating badges on mobile/tablet to prevent horizontal scrollbar */
   }
 }
 
-@media (max-width: 600px) {
-  .hero-title {
-    font-size: 2.25rem;
+@media (max-width: 768px) {
+  .header-actions {
+    gap: 0.5rem;
   }
-  
+
+  .btn-cv-header {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .lang-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.775rem;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
   .projects-grid {
     grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
-  
-  .avatar-wrapper {
-    width: 250px;
-    height: 250px;
+
+  .project-img-wrapper {
+    height: 190px;
   }
-  
-  .floating-tech-badge {
-    display: none;
+
+  .project-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .btn-project {
+    width: 100%;
+  }
+
+  .contact-info-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .btn-copy {
+    align-self: flex-start;
+  }
+
+  .contact-info-val {
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    font-size: 0.875rem;
+  }
+
+  /* Modal Mobile Optimization */
+  .modal-card {
+    padding: 1.5rem 1rem;
+    width: 95%;
+    max-height: 92vh;
+    border-radius: var(--radius-md);
+  }
+
+  .modal-gallery-main {
+    height: 210px;
+  }
+
+  .modal-close-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  .modal-body h3 {
+    font-size: 1.3rem;
+    padding-right: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-cv-header span {
+    display: none; /* Hide text, show icon only on ultra-small screens */
+  }
+
+  .btn-cv-header {
+    padding: 0.45rem;
+    border-radius: var(--radius-full);
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .stat-item {
+    padding: 1rem 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.6rem;
+  }
+
+  .about-card, .contact-form-card {
+    padding: 1.5rem 1rem;
   }
 }
