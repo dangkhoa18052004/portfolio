@@ -507,7 +507,7 @@ function closeProjectModal() {
   }
 }
 
-// --- Contact Form Handling ---
+// --- Contact Form Handling (AJAX to Gmail via FormSubmit) ---
 function initContactForm() {
   const form = document.getElementById('contactForm');
   const statusMsg = document.getElementById('formStatus');
@@ -521,7 +521,18 @@ function initContactForm() {
       btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${currentLang === 'vi' ? 'Đang gửi...' : 'Sending...'}`;
       btn.disabled = true;
 
-      setTimeout(() => {
+      const formData = new FormData(form);
+
+      fetch('https://formsubmit.co/ajax/dangkhoa18052004qni@gmail.com', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(formData))
+      })
+      .then(response => response.json())
+      .then(data => {
         btn.innerHTML = origText;
         btn.disabled = false;
         statusMsg.style.display = 'block';
@@ -531,8 +542,17 @@ function initContactForm() {
 
         setTimeout(() => {
           statusMsg.style.display = 'none';
-        }, 5000);
-      }, 1000);
+        }, 6000);
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        statusMsg.style.display = 'block';
+        statusMsg.style.borderColor = '#ef4444';
+        statusMsg.style.color = '#ef4444';
+        statusMsg.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again.';
+      });
     });
   }
 }
