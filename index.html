@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đặng Văn Khoa | Software Engineering Intern - Portfolio</title>
+  <meta name="description" content="Portfolio cá nhân của Đặng Văn Khoa - Thực tập sinh Phát triển Phần mềm (Full-Stack & Backend Developer), kinh nghiệm về Python Flask, ReactJS, PostgreSQL, RESTful API và thuật toán AI.">
+  <meta name="keywords" content="Đặng Văn Khoa, Software Engineer Intern, Backend Developer, Full-stack Developer, Flask, ReactJS, PostgreSQL, Python">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER / NAVIGATION ==================== -->
+  <header class="header">
+    <div class="container">
+      <a href="#hero" class="logo">
+        <span>&lt;</span>Đặng Văn Khoa<span> /&gt;</span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#about" class="nav-link active" data-i18n="nav_about">Về Tôi</a>
+        <a href="#skills" class="nav-link" data-i18n="nav_skills">Kỹ Năng</a>
+        <a href="#projects" class="nav-link" data-i18n="nav_projects">Dự Án</a>
+        <a href="#experience" class="nav-link" data-i18n="nav_experience">Kinh Nghiệm</a>
+        <a href="#education" class="nav-link" data-i18n="nav_education">Học Vấn</a>
+        <a href="#contact" class="nav-link" data-i18n="nav_contact">Liên Hệ</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="vi" title="Tiếng Việt">
+            <span>🇻🇳</span> VI
+          </button>
+          <button class="lang-btn" data-lang="en" title="English">
+            <span>🇬🇧</span> EN
+          </button>
+        </div>
+
+        <!-- Theme Switcher -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+          <i class="fas fa-sun"></i>
+        </button>
+
+        <!-- Download CV Button -->
+        <a href="./CV_Đặng Văn Khoa.pdf" download="CV_Đặng_Văn_Khoa.pdf" class="btn-cv-header">
+          <i class="fas fa-file-download"></i>
+          <span data-i18n="btn_download_cv">Tải CV</span>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="hero">
+      <div class="hero-background-glow"></div>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <i class="fas fa-circle"></i>
+              <span data-i18n="hero_badge">Sẵn sàng nhận vị trí Thực Tập Sinh</span>
+            </div>
+            
+            <h1 class="hero-title">
+              <span data-i18n="hero_greeting">Xin chào, tôi là</span><br>
+              <span class="text-gradient" data-i18n="hero_title">Đặng Văn Khoa</span>
+            </h1>
+            
+            <h2 style="font-size: 1.5rem; color: var(--primary-accent); margin-bottom: 1rem; font-weight: 700;" data-i18n="hero_role">
+              Thực Tập Sinh Phát Triển Phần Mềm
+            </h2>
+            
+            <p class="hero-subtitle" data-i18n="hero_subtitle">
+              Lập trình viên Full-Stack & Backend đầy nhiệt huyết, chuyên môn về Python Flask, ReactJS, PostgreSQL, RESTful API và thuật toán AI gợi ý.
+            </p>
+
+            <div class="hero-cta">
+              <a href="#projects" class="btn btn-primary">
+                <span data-i18n="hero_cta_projects">Khám Phá Dự Án</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
+              <a href="#contact" class="btn btn-secondary">
+                <span data-i18n="hero_cta_contact">Liên Hệ Ngay</span>
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+
+            <div class="hero-socials">
+              <a href="https://github.com/dangkhoa18052004" target="_blank" class="social-link" title="GitHub">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="mailto:dangkhoa18052004qni@gmail.com" class="social-link" title="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="tel:0387829152" class="social-link" title="Phone">
+                <i class="fas fa-phone-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="avatar-wrapper">
+              <img src="./assets/avatar.png" alt="Đặng Văn Khoa Avatar" class="avatar-img">
+            </div>
+
+            <!-- Floating Badges -->
+            <div class="floating-tech-badge badge-1">
+              <i class="fab fa-python"></i>
+              <span>Python & Flask</span>
+            </div>
+            <div class="floating-tech-badge badge-2">
+              <i class="fab fa-react"></i>
+              <span>ReactJS & JS</span>
+            </div>
+            <div class="floating-tech-badge badge-3">
+              <i class="fas fa-database"></i>
+              <span>PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about" class="section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="about_tag">TỔNG QUAN</span>
+          <h2 class="section-title" data-i18n="about_title">Giới Thiệu Bản Thân</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <p class="about-text" data-i18n="about_text_1">
+              Tôi là sinh viên ngành Kỹ thuật Phần mềm tại Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh (2022 - 2026), có kinh nghiệm thực tế trong việc thiết kế và phát triển ứng dụng Full-stack, các dịch vụ Backend chuẩn RESTful API và các hệ thống hỗ trợ quyết định thông minh bằng Python Flask & PostgreSQL.
+            </p>
+            <p class="about-text" data-i18n="about_text_2">
+              Mong muốn ứng dụng kiến thức chuyên môn về thiết kế CSDL, xác thực JWT, lập trình ứng dụng di động Flutter và xây dựng giao diện responsive để đóng góp giá trị cho các dự án phần mềm thực tế.
+            </p>
+          </div>
+
+          <div class="about-stats">
+            <div class="stat-item">
+              <div class="stat-number">03+</div>
+              <div class="stat-label" data-i18n="stat_projects">Dự Án Hoàn Thành</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">03</div>
+              <div class="stat-label" data-i18n="stat_experience">Tháng Thực Tập</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">10+</div>
+              <div class="stat-label" data-i18n="stat_tech">Công Nghệ Sử Dụng</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label" data-i18n="stat_passion">Đam Mê Học Hỏi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SKILLS SECTION ==================== -->
+    <section id="skills" class="section-padding" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="skills_tag">CHUYÊN MÔN</span>
+          <h2 class="section-title" data-i18n="skills_title">Kỹ Năng & Công Nghệ</h2>
+          <p class="section-description" data-i18n="skills_desc">
+            Tập hợp các công nghệ và công cụ lập trình tôi sử dụng thành thạo trong phát triển phần mềm.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <!-- Languages -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-code"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_languages">Ngôn Ngữ Lập Trình</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag"><i class="fab fa-python" style="color: #3776ab;"></i> Python</span>
+              <span class="skill-tag"><i class="fab fa-java" style="color: #f89820;"></i> Java</span>
+              <span class="skill-tag"><i class="fab fa-js-square" style="color: #f7df1e;"></i> JavaScript</span>
+              <span class="skill-tag"><i class="fas fa-mobile-alt" style="color: #0175c2;"></i> Dart</span>
+            </div>
+          </div>
+
+          <!-- Backend -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-server"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_backend">Backend & API</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag"><i class="fas fa-pepper-hot" style="color: #000;"></i> Python Flask</span>
+              <span class="skill-tag"><i class="fas fa-network-wired" style="color: #00f2fe;"></i> RESTful APIs</span>
+              <span class="skill-tag"><i class="fas fa-key" style="color: #e34f26;"></i> JWT Authentication</span>
+            </div>
+          </div>
+
+          <!-- Databases -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-database"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_database">Cơ Sở Dữ Liệu</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag"><i class="fas fa-database" style="color: #336791;"></i> PostgreSQL</span>
+              <span class="skill-tag"><i class="fas fa-server" style="color: #cc292b;"></i> SQL Server</span>
+              <span class="skill-tag"><i class="fas fa-leaf" style="color: #47a248;"></i> MongoDB</span>
+            </div>
+          </div>
+
+          <!-- Frontend -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-laptop-code"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_frontend">Frontend & UI</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag"><i class="fab fa-react" style="color: #61dafb;"></i> ReactJS</span>
+              <span class="skill-tag"><i class="fab fa-html5" style="color: #e34f26;"></i> HTML5</span>
+              <span class="skill-tag"><i class="fab fa-css3-alt" style="color: #1572b6;"></i> CSS3 & Flex/Grid</span>
+              <span class="skill-tag"><i class="fas fa-mobile-alt" style="color: #02569b;"></i> Flutter (Mobile)</span>
+            </div>
+          </div>
+
+          <!-- Tools -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-tools"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_tools">Công Cụ & Môi Trường</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag"><i class="fab fa-git-alt" style="color: #f05032;"></i> Git</span>
+              <span class="skill-tag"><i class="fab fa-github"></i> GitHub</span>
+              <span class="skill-tag"><i class="fas fa-paper-plane" style="color: #ff6c37;"></i> Postman</span>
+              <span class="skill-tag"><i class="fas fa-code" style="color: #007acc;"></i> VS Code</span>
+            </div>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="skill-category-card">
+            <div class="skill-category-header">
+              <div class="skill-icon-wrapper"><i class="fas fa-user-check"></i></div>
+              <h3 class="skill-category-title" data-i18n="cat_softskills">Kỹ Năng Mềm</h3>
+            </div>
+            <div class="skill-tags">
+              <span class="skill-tag" data-i18n="skill_problem_solving">Giải quyết vấn đề</span>
+              <span class="skill-tag" data-i18n="skill_teamwork">Làm việc nhóm</span>
+              <span class="skill-tag" data-i18n="skill_self_learning">Tự học & Nghiên cứu</span>
+              <span class="skill-tag" data-i18n="skill_communication">Giao tiếp hiệu quả</span>
+              <span class="skill-tag" data-i18n="skill_time_management">Quản lý thời gian</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS SECTION ==================== -->
+    <section id="projects" class="section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="projects_tag">SẢN PHẨM</span>
+          <h2 class="section-title" data-i18n="projects_title">Dự Án Nổi Bật</h2>
+          <p class="section-description" data-i18n="projects_desc">
+            Các hệ thống tiêu biểu tôi đã phát triển bao gồm Web AI Gợi ý, Hệ thống Quản lý SPA và App Đặt lịch Khám bệnh.
+          </p>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Tất Cả</button>
+          <button class="filter-btn" data-filter="fullstack" data-i18n="filter_fullstack">Full-Stack</button>
+          <button class="filter-btn" data-filter="backend" data-i18n="filter_backend">Backend & Mobile</button>
+          <button class="filter-btn" data-filter="ai" data-i18n="filter_ai">AI & Data</button>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Project 1: AI Laptop Recommendation System -->
+          <div class="project-card" data-category="fullstack ai">
+            <div class="project-img-wrapper">
+              <img src="./assets/project-laptop.png" alt="AI Laptop Recommendation System" class="project-img">
+              <span class="project-year-badge">2025</span>
+            </div>
+            <div class="project-content">
+              <div class="project-role" data-i18n="p1_role">Full-stack Developer | 2025</div>
+              <h3 class="project-title" data-i18n="p1_title">AI Laptop Recommendation System</h3>
+              <p class="project-desc" data-i18n="p1_desc">
+                Hệ thống tư vấn và gợi ý laptop thông minh ứng dụng phương pháp Phân tích Thứ bậc Analytic Hierarchy Process (AHP) giúp cá nhân hóa kết quả theo nhu cầu người dùng.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tech-badge">Python Flask</span>
+                <span class="tech-badge">ReactJS</span>
+                <span class="tech-badge">PostgreSQL</span>
+                <span class="tech-badge">AHP Algorithm</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://analytic-hierarchy-process-one.vercel.app" target="_blank" class="btn-project btn-project-primary">
+                  <i class="fas fa-external-link-alt"></i> <span data-i18n="btn_demo">Live Demo</span>
+                </a>
+                <button onclick="openProjectModal('p1')" class="btn-project btn-project-secondary">
+                  <i class="fas fa-info-circle"></i> <span data-i18n="btn_details">Chi Tiết</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: SPA Management System -->
+          <div class="project-card" data-category="fullstack">
+            <div class="project-img-wrapper">
+              <img src="./assets/project-spa.png" alt="SPA Management System" class="project-img">
+              <span class="project-year-badge">2026</span>
+            </div>
+            <div class="project-content">
+              <div class="project-role" data-i18n="p2_role">Full-stack Developer | 2026</div>
+              <h3 class="project-title" data-i18n="p2_title">SPA Management System</h3>
+              <p class="project-desc" data-i18n="p2_desc">
+                Hệ thống quản lý SPA toàn diện hỗ trợ đặt lịch hẹn trực tuyến, quản lý thông tin khách hàng, dịch vụ, hóa đơn và nhắn tin tư vấn thời gian thực.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tech-badge">Python Flask</span>
+                <span class="tech-badge">JavaScript</span>
+                <span class="tech-badge">PostgreSQL</span>
+                <span class="tech-badge">Real-time Messaging</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://binspa.id.vn" target="_blank" class="btn-project btn-project-primary">
+                  <i class="fas fa-external-link-alt"></i> <span data-i18n="btn_demo">Live Demo</span>
+                </a>
+                <button onclick="openProjectModal('p2')" class="btn-project btn-project-secondary">
+                  <i class="fas fa-info-circle"></i> <span data-i18n="btn_details">Chi Tiết</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Medical Appointment Booking System (DLKB) -->
+          <div class="project-card" data-category="backend">
+            <div class="project-img-wrapper">
+              <img src="./assets/project-medical.png" alt="Medical Appointment Booking System" class="project-img">
+              <span class="project-year-badge">2026</span>
+            </div>
+            <div class="project-content">
+              <div class="project-role" data-i18n="p3_role">Backend & Mobile Developer | 2026</div>
+              <h3 class="project-title" data-i18n="p3_title">Medical Appointment Booking System (DLKB)</h3>
+              <p class="project-desc" data-i18n="p3_desc">
+                Ứng dụng di động Flutter & RESTful API Flask hỗ trợ bệnh nhân tìm kiếm bác sĩ, đặt lịch khám trực tuyến, quản lý ca khám và thanh toán tiện lợi.
+              </p>
+              <div class="project-tech-stack">
+                <span class="tech-badge">Python Flask</span>
+                <span class="tech-badge">Flutter</span>
+                <span class="tech-badge">PostgreSQL</span>
+                <span class="tech-badge">JWT Auth</span>
+              </div>
+              <div class="project-actions">
+                <a href="https://github.com/dangkhoa18052004/DLKB" target="_blank" class="btn-project btn-project-primary">
+                  <i class="fab fa-github"></i> <span data-i18n="btn_github">Mã Nguồn</span>
+                </a>
+                <button onclick="openProjectModal('p3')" class="btn-project btn-project-secondary">
+                  <i class="fas fa-info-circle"></i> <span data-i18n="btn_details">Chi Tiết</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EXPERIENCE & EDUCATION ==================== -->
+    <section id="experience" class="section-padding" style="background: var(--bg-secondary);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="exp_tag">HÀNH TRÌNH</span>
+          <h2 class="section-title" data-i18n="exp_title">Kinh Nghiệm & Học Vấn</h2>
+        </div>
+
+        <div class="timeline-grid">
+          <!-- Work Experience Column -->
+          <div>
+            <h3 class="timeline-column-title">
+              <i class="fas fa-briefcase"></i> <span data-i18n="timeline_work">Kinh Nghiệm Làm Việc</span>
+            </h3>
+            <div class="timeline-list">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                  <div class="timeline-date">04/2026 - 06/2026</div>
+                  <h4 class="timeline-title" data-i18n="work_role_1">Thực Tập Sinh Phần Mềm</h4>
+                  <div class="timeline-company" data-i18n="work_company_1">Automation Land (04/2026 - 06/2026)</div>
+                  <ul class="timeline-bullets">
+                    <li data-i18n="work_bullet_1">Thực hiện kiểm thử chức năng, giao diện, hồi quy và API cơ bản theo yêu cầu dự án.</li>
+                    <li data-i18n="work_bullet_2">Thiết kế test case, ghi nhận lỗi (bugs), xác minh bản sửa lỗi và phối hợp chặt chẽ với đội ngũ phát triển.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education Column -->
+          <div id="education">
+            <h3 class="timeline-column-title">
+              <i class="fas fa-graduation-cap"></i> <span data-i18n="timeline_edu">Học Vấn & Bằng Cấp</span>
+            </h3>
+            <div class="timeline-list">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                  <div class="timeline-date" data-i18n="edu_years">2022 - 2026</div>
+                  <h4 class="timeline-title" data-i18n="edu_degree">Cử nhân Kỹ thuật Phần mềm</h4>
+                  <div class="timeline-company" data-i18n="edu_school">Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh</div>
+                  <p style="font-size: 0.9rem; color: var(--text-muted);" data-i18n="edu_desc">
+                    Đào tạo bài bản về tư duy thuật toán, thiết kế hệ thống phần mềm, cơ sở dữ liệu và quy trình phát triển Agile/Scrum.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-i18n="contact_tag">KẾT NỐI</span>
+          <h2 class="section-title" data-i18n="contact_title">Liên Hệ Với Tôi</h2>
+          <p class="section-description" data-i18n="contact_desc">
+            Tôi luôn sẵn sàng trao đổi về cơ hội thực tập, công việc hoặc hợp tác phát triển dự án.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-cards">
+            <!-- Phone Card -->
+            <div class="contact-info-card">
+              <div class="contact-info-main">
+                <div class="contact-icon-box"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                  <div class="contact-info-label" data-i18n="contact_phone">Số Điện Thoại</div>
+                  <div class="contact-info-val">0387 829 152</div>
+                </div>
+              </div>
+              <button onclick="copyToClipboard('0387829152')" class="btn-copy">
+                <i class="far fa-copy"></i> <span data-i18n="btn_copy">Sao chép</span>
+              </button>
+            </div>
+
+            <!-- Email Card -->
+            <div class="contact-info-card">
+              <div class="contact-info-main">
+                <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+                <div>
+                  <div class="contact-info-label" data-i18n="contact_email">Địa Chỉ Email</div>
+                  <div class="contact-info-val" style="font-size: 0.9rem;">dangkhoa18052004qni@gmail.com</div>
+                </div>
+              </div>
+              <button onclick="copyToClipboard('dangkhoa18052004qni@gmail.com')" class="btn-copy">
+                <i class="far fa-copy"></i> <span data-i18n="btn_copy">Sao chép</span>
+              </button>
+            </div>
+
+            <!-- Location Card -->
+            <div class="contact-info-card">
+              <div class="contact-info-main">
+                <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                <div>
+                  <div class="contact-info-label" data-i18n="contact_location">Vị Trí Rất Thuận Tiện</div>
+                  <div class="contact-info-val">TP. Hồ Chí Minh, Việt Nam</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- GitHub Card -->
+            <div class="contact-info-card">
+              <div class="contact-info-main">
+                <div class="contact-icon-box"><i class="fab fa-github"></i></div>
+                <div>
+                  <div class="contact-info-label" data-i18n="contact_github">Trang GitHub</div>
+                  <div class="contact-info-val">github.com/dangkhoa18052004</div>
+                </div>
+              </div>
+              <a href="https://github.com/dangkhoa18052004" target="_blank" class="btn-copy">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-card">
+            <form id="contactForm">
+              <div class="form-group">
+                <label class="form-label" data-i18n="form_name">Họ và Tên</label>
+                <input type="text" class="form-input" required data-i18n-placeholder="form_name" placeholder="Họ và Tên">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="form_email">Email của bạn</label>
+                <input type="email" class="form-input" required data-i18n-placeholder="form_email" placeholder="Email của bạn">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="form_subject">Tiêu đề</label>
+                <input type="text" class="form-input" required data-i18n-placeholder="form_subject" placeholder="Tiêu đề">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" data-i18n="form_message">Nội dung tin nhắn</label>
+                <textarea class="form-textarea" required data-i18n-placeholder="form_message" placeholder="Nội dung tin nhắn"></textarea>
+              </div>
+
+              <div id="formStatus" style="display: none; margin-bottom: 1rem; padding: 0.85rem; border-radius: var(--radius-md); font-size: 0.9rem; background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981;"></div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <span data-i18n="btn_send">Gửi Tin Nhắn</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <a href="#hero" class="logo">
+          <span>&lt;</span>Đặng Văn Khoa<span> /&gt;</span>
+        </a>
+        <p class="footer-copyright" data-i18n="footer_text">
+          © 2026 Đặng Văn Khoa. Xây dựng với tâm huyết và công nghệ Web hiện đại.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== PROJECT DETAILS MODAL ==================== -->
+  <div class="modal-overlay" id="projectModal" onclick="if(event.target === this) closeProjectModal()">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close Modal">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic Modal Content filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
