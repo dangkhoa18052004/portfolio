@@ -236,13 +236,20 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initMobileMenu();
 
-  // Modern Animation Modules
+  // Modern Animation Modules (Phase 1 & Phase 2)
   initScrollProgress();
   initScrollReveal();
   initTypingEffect();
   initParticleCanvas();
   initStatsCounter();
   init3DTilt();
+
+  // Phase 2 Visual Upgrades
+  initCustomCursor();
+  initCardSpotlight();
+  initSkillProgress();
+  initProjectHoverSlideshow();
+  initBackToTop();
 });
 
 // --- Language Switcher ---
@@ -974,5 +981,149 @@ function init3DTilt() {
       card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
       card.style.boxShadow = '';
     });
+  });
+}
+
+// ==========================================================================
+// PHASE 2 MODULES (CURSOR, SPOTLIGHT, SKILL BARS, HOVER SLIDESHOW, BACK-TO-TOP)
+// ==========================================================================
+
+// --- 7. Custom Glowing Pointer Cursor ---
+function initCustomCursor() {
+  // Disable on mobile/touch devices
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 992) return;
+
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mouseX = -100, mouseY = -100;
+  let ringX = -100, ringY = -100;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = `${mouseX}px`;
+    dot.style.top = `${mouseY}px`;
+  });
+
+  function renderRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    ring.style.left = `${ringX}px`;
+    ring.style.top = `${ringY}px`;
+    requestAnimationFrame(renderRing);
+  }
+  renderRing();
+
+  // Expand ring on interactive elements
+  const interactiveElems = document.querySelectorAll('a, button, .project-card, .skill-category-card, .social-link, .stat-item');
+  interactiveElems.forEach(elem => {
+    elem.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    elem.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+}
+
+// --- 8. Card Spotlight Tracking Glow ---
+function initCardSpotlight() {
+  const spotlightCards = document.querySelectorAll('.spotlight-card');
+
+  spotlightCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+}
+
+// --- 9. Skill Progress Fill Animation ---
+function initSkillProgress() {
+  const progressFills = document.querySelectorAll('.skill-progress-fill');
+  if (!progressFills.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target;
+        const targetWidth = fill.getAttribute('data-progress');
+        if (targetWidth) {
+          fill.style.width = targetWidth;
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  progressFills.forEach(fill => observer.observe(fill));
+}
+
+// --- 10. Project Hover Image Slideshow ---
+function initProjectHoverSlideshow() {
+  const projectCards = document.querySelectorAll('.project-card');
+
+  const extraImages = {
+    p1: ['./assets/project-laptop.png', './assets/Laptop2026-07-30 171949 (2).png', './assets/Laptop2026-07-30 171949 (4).png'],
+    p2: ['./assets/project-spa.png', './assets/Spa2026-07-30 172033 (1).png', './assets/Spa2026-07-30 172033 (11).png'],
+    p3: ['./assets/project-medical.png']
+  };
+
+  projectCards.forEach((card, idx) => {
+    const projKey = `p${idx + 1}`;
+    const imgs = extraImages[projKey];
+    if (!imgs || imgs.length <= 1) return;
+
+    const imgWrapper = card.querySelector('.project-img-wrapper');
+    const mainImg = card.querySelector('.project-img');
+    if (!imgWrapper || !mainImg) return;
+
+    let hoverInterval = null;
+    let imgIdx = 0;
+
+    card.addEventListener('mouseenter', () => {
+      hoverInterval = setInterval(() => {
+        imgIdx = (imgIdx + 1) % imgs.length;
+        mainImg.style.opacity = '0.7';
+        setTimeout(() => {
+          mainImg.src = imgs[imgIdx];
+          mainImg.style.opacity = '1';
+        }, 150);
+      }, 1400);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      clearInterval(hoverInterval);
+      imgIdx = 0;
+      mainImg.src = imgs[0];
+      mainImg.style.opacity = '1';
+    });
+  });
+}
+
+// --- 11. Floating Back-To-Top Button with Radial Progress ---
+function initBackToTop() {
+  const btn = document.getElementById('backToTopBtn');
+  const circle = document.getElementById('backToTopCircle');
+  if (!btn || !circle) return;
+
+  const circumference = 2 * Math.PI * 22; // r=22 -> ~138.2
+  circle.style.strokeDasharray = `${circumference}`;
+
+  window.addEventListener('scroll', () => {
+    const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollCurrent = window.scrollY;
+
+    if (scrollCurrent > 300) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+
+    if (scrollTotal > 0) {
+      const scrollPercent = scrollCurrent / scrollTotal;
+      const drawLength = circumference * (1 - scrollPercent);
+      circle.style.strokeDashoffset = `${drawLength}`;
+    }
   });
 }
