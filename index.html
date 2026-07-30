@@ -50,12 +50,22 @@
       </nav>
 
       <div class="header-actions">
+        <!-- Quick Command Palette Button (Ctrl+K) -->
+        <button class="cmd-k-trigger" id="cmdKTrigger" title="Tìm kiếm & Phím tắt (Ctrl+K)" aria-label="Quick Search">
+          <i class="fas fa-search"></i>
+        </button>
+
+        <!-- Sound FX Toggle Button -->
+        <button class="sound-toggle" id="soundToggle" title="Bật/Tắt Âm Thanh" aria-label="Toggle Sound Effects">
+          <i class="fas fa-volume-mute"></i>
+        </button>
+
         <!-- Language Switcher -->
         <div class="lang-switcher">
-          <button class="lang-btn active" data-lang="vi" title="Tiếng Việt">
+          <button class="lang-btn" data-lang="vi" title="Tiếng Việt">
             <span>🇻🇳</span> VI
           </button>
-          <button class="lang-btn" data-lang="en" title="English">
+          <button class="lang-btn active" data-lang="en" title="English">
             <span>🇬🇧</span> EN
           </button>
         </div>
@@ -87,8 +97,10 @@
       <div class="container">
         <div class="hero-grid">
           <div class="hero-content reveal reveal-left">
-            <div class="hero-badge">
-              <i class="fas fa-circle"></i>
+            <div class="hero-badge" id="heroBadge">
+              <span class="time-greeting-pill" id="timeGreetingPill">🌅 Chào buổi sáng</span>
+              <span class="hero-badge-separator">•</span>
+              <i class="fas fa-circle badge-pulse-dot"></i>
               <span data-i18n="hero_badge">Sẵn sàng nhận vị trí Thực Tập Sinh</span>
             </div>
 
@@ -403,7 +415,7 @@
 
         <div class="projects-grid">
           <!-- Project 1: AI Laptop Recommendation System -->
-          <div class="project-card tilt-card reveal stagger-1" data-category="fullstack ai">
+          <div class="project-card tilt-card reveal stagger-1" data-category="fullstack ai" data-skills="python flask reactjs postgresql ahp javascript">
             <div class="project-img-wrapper">
               <img src="./assets/project-laptop.png" alt="AI Laptop Recommendation System" class="project-img">
               <span class="project-year-badge">2025</span>
@@ -438,7 +450,7 @@
           </div>
 
           <!-- Project 2: SPA Management System -->
-          <div class="project-card tilt-card reveal stagger-2" data-category="fullstack">
+          <div class="project-card tilt-card reveal stagger-2" data-category="fullstack" data-skills="python flask javascript postgresql realtime html css">
             <div class="project-img-wrapper">
               <img src="./assets/project-spa.png" alt="SPA Management System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -472,7 +484,7 @@
           </div>
 
           <!-- Project 3: Medical Appointment Booking System (DLKB) -->
-          <div class="project-card tilt-card reveal stagger-3" data-category="backend">
+          <div class="project-card tilt-card reveal stagger-3" data-category="backend" data-skills="python flask flutter dart postgresql jwt restapi">
             <div class="project-img-wrapper">
               <img src="./assets/project-medical.png" alt="Medical Appointment Booking System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -711,6 +723,25 @@
     </svg>
     <i class="fas fa-arrow-up"></i>
   </button>
+
+  <!-- Command Palette Modal (Ctrl + K / Cmd + K) -->
+  <div class="cmd-overlay" id="cmdOverlay" onclick="if(event.target===this) closeCmdPalette()">
+    <div class="cmd-modal">
+      <div class="cmd-header">
+        <i class="fas fa-search cmd-search-icon"></i>
+        <input type="text" id="cmdInput" class="cmd-input" placeholder="Gõ để tìm phần, dự án hoặc lệnh..." autocomplete="off">
+        <span class="cmd-esc-badge"><kbd>ESC</kbd></span>
+      </div>
+      <div class="cmd-body" id="cmdResults">
+        <!-- Dynamic search results populated by JS -->
+      </div>
+      <div class="cmd-footer">
+        <span><kbd>↑</kbd> <kbd>↓</kbd> Di chuyển</span>
+        <span><kbd>↵</kbd> Chọn</span>
+        <span><kbd>ESC</kbd> Đóng</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Custom JavaScript -->
   <script src="script.js"></script>

@@ -224,7 +224,7 @@ const translations = {
 };
 
 // --- State Management ---
-let currentLang = localStorage.getItem('portfolio_lang') || 'vi';
+let currentLang = localStorage.getItem('portfolio_lang') || 'en';
 let currentTheme = localStorage.getItem('portfolio_theme') || 'dark';
 
 // --- Initialize Page & Animations ---
@@ -250,6 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initSkillProgress();
   initProjectHoverSlideshow();
   initBackToTop();
+
+  // Phase 3 Advanced Visual Effects & Developer Features
+  initTimeGreeting();
+  initMagneticButtons();
+  initCommandPalette();
+  initAudioFX();
+  initSkillHighlighting();
 });
 
 // --- Language Switcher ---
@@ -294,6 +301,10 @@ function setLanguage(lang) {
       elem.placeholder = translations[lang][key];
     }
   });
+
+  if (typeof initTimeGreeting === 'function') {
+    initTimeGreeting();
+  }
 }
 
 // --- Theme Switcher (Dark / Light) ---
@@ -886,7 +897,7 @@ function initParticleCanvas() {
   function animate() {
     ctx.clearRect(0, 0, width, height);
 
-    // Draw connecting lines
+    // Draw connecting lines between particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -903,6 +914,24 @@ function initParticleCanvas() {
           ctx.stroke();
         }
       }
+    }
+
+    // Draw active neural connection to mouse cursor
+    if (mouse.x !== null && mouse.y !== null) {
+      particles.forEach(p => {
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius + 30) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = '#00f2fe';
+          ctx.globalAlpha = (1 - dist / (mouse.radius + 30)) * 0.45;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      });
     }
 
     particles.forEach(p => {
@@ -1126,4 +1155,344 @@ function initBackToTop() {
       circle.style.strokeDashoffset = `${drawLength}`;
     }
   });
+}
+
+// ==========================================================================
+// PHASE 3 MODULES (TIME GREETING, MAGNETIC BTNS, COMMAND PALETTE, AUDIO FX, SKILL MATCH)
+// ==========================================================================
+
+// --- 12. Real-time Dynamic Time Greeting ---
+function initTimeGreeting() {
+  const greetingPill = document.getElementById('timeGreetingPill');
+  if (!greetingPill) return;
+
+  const hour = new Date().getHours();
+  let textVi = '';
+  let textEn = '';
+
+  if (hour >= 5 && hour < 12) {
+    textVi = '🌅 Chào buổi sáng';
+    textEn = '🌅 Good Morning';
+  } else if (hour >= 12 && hour < 18) {
+    textVi = '☀️ Chào buổi chiều';
+    textEn = '☀️ Good Afternoon';
+  } else {
+    textVi = '🌙 Chào buổi tối';
+    textEn = '🌙 Good Evening';
+  }
+
+  greetingPill.textContent = currentLang === 'vi' ? textVi : textEn;
+}
+
+// --- 13. Interactive Magnetic Button Effect ---
+function initMagneticButtons() {
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 992) return;
+
+  const magElements = document.querySelectorAll('.btn, .btn-project, .btn-cv-header, .social-link, .cmd-k-trigger, .sound-toggle');
+
+  magElements.forEach(elem => {
+    elem.addEventListener('mousemove', (e) => {
+      const rect = elem.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+
+      elem.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+    });
+
+    elem.addEventListener('mouseleave', () => {
+      elem.style.transform = 'translate(0px, 0px)';
+    });
+  });
+}
+
+// --- 14. Synthesized Web Audio UI Sound FX ---
+let audioCtx = null;
+let soundEnabled = localStorage.getItem('portfolio_sound') === 'on';
+
+function initAudioFX() {
+  const soundBtn = document.getElementById('soundToggle');
+  if (!soundBtn) return;
+
+  updateSoundIcon();
+
+  soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('portfolio_sound', soundEnabled ? 'on' : 'off');
+    updateSoundIcon();
+    if (soundEnabled) playSound('click');
+  });
+
+  // Attach sound listeners to interactive elements
+  document.querySelectorAll('a, button, .project-card, .skill-tag, .nav-link, .filter-btn').forEach(elem => {
+    elem.addEventListener('mouseenter', () => playSound('hover'));
+    elem.addEventListener('click', () => playSound('click'));
+  });
+}
+
+function updateSoundIcon() {
+  const soundBtn = document.getElementById('soundToggle');
+  if (!soundBtn) return;
+  const icon = soundBtn.querySelector('i');
+  if (soundEnabled) {
+    soundBtn.classList.add('active-sound');
+    if (icon) icon.className = 'fas fa-volume-up';
+    soundBtn.title = currentLang === 'vi' ? 'Đã bật âm thanh' : 'Sound Enabled';
+  } else {
+    soundBtn.classList.remove('active-sound');
+    if (icon) icon.className = 'fas fa-volume-mute';
+    soundBtn.title = currentLang === 'vi' ? 'Bật/Tắt âm thanh' : 'Sound Muted';
+  }
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    const now = audioCtx.currentTime;
+
+    if (type === 'hover') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.exponentialRampToValueAtTime(580, now + 0.04);
+      gain.gain.setValueAtTime(0.015, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+      osc.start(now);
+      osc.stop(now + 0.04);
+    } else if (type === 'click') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(750, now);
+      osc.frequency.exponentialRampToValueAtTime(280, now + 0.07);
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+      osc.start(now);
+      osc.stop(now + 0.07);
+    }
+  } catch (e) {
+    // Silent fallback
+  }
+}
+
+// --- 15. Command Palette (Ctrl + K / Cmd + K) ---
+let cmdSelectedIdx = 0;
+let cmdItemsList = [];
+
+function initCommandPalette() {
+  const triggerBtn = document.getElementById('cmdKTrigger');
+  const overlay = document.getElementById('cmdOverlay');
+  const input = document.getElementById('cmdInput');
+  const resultsContainer = document.getElementById('cmdResults');
+
+  if (!overlay || !input) return;
+
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', openCmdPalette);
+  }
+
+  // Key combination listener
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (overlay.classList.contains('active')) {
+        closeCmdPalette();
+      } else {
+        openCmdPalette();
+      }
+    } else if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeCmdPalette();
+    }
+  });
+
+  input.addEventListener('input', () => {
+    renderCmdResults(input.value.trim().toLowerCase());
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const items = resultsContainer.querySelectorAll('.cmd-item');
+    if (!items.length) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      cmdSelectedIdx = (cmdSelectedIdx + 1) % items.length;
+      updateCmdSelection(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      cmdSelectedIdx = (cmdSelectedIdx - 1 + items.length) % items.length;
+      updateCmdSelection(items);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (items[cmdSelectedIdx]) {
+        items[cmdSelectedIdx].click();
+      }
+    }
+  });
+}
+
+function openCmdPalette() {
+  const overlay = document.getElementById('cmdOverlay');
+  const input = document.getElementById('cmdInput');
+  if (!overlay || !input) return;
+
+  overlay.classList.add('active');
+  input.value = '';
+  cmdSelectedIdx = 0;
+  renderCmdResults('');
+  setTimeout(() => input.focus(), 50);
+}
+
+function closeCmdPalette() {
+  const overlay = document.getElementById('cmdOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function getCmdData() {
+  const isVi = currentLang === 'vi';
+  return [
+    {
+      group: isVi ? 'Điều Hướng Trực Tiếp' : 'Navigation',
+      items: [
+        { icon: 'fa-user', title: isVi ? 'Giới Thiệu Bản Thân (#about)' : 'About Me (#about)', action: () => scrollToSection('#about') },
+        { icon: 'fa-code', title: isVi ? 'Kỹ Năng & Công Nghệ (#skills)' : 'Skills & Tech (#skills)', action: () => scrollToSection('#skills') },
+        { icon: 'fa-laptop-code', title: isVi ? 'Dự Án Nổi Bật (#projects)' : 'Featured Projects (#projects)', action: () => scrollToSection('#projects') },
+        { icon: 'fa-briefcase', title: isVi ? 'Kinh Nghiệm & Học Vấn (#experience)' : 'Experience & Education (#experience)', action: () => scrollToSection('#experience') },
+        { icon: 'fa-envelope', title: isVi ? 'Liên Hệ Trực Tiếp (#contact)' : 'Contact Me (#contact)', action: () => scrollToSection('#contact') }
+      ]
+    },
+    {
+      group: isVi ? 'Dự Án Thực Chiến' : 'Projects',
+      items: [
+        { icon: 'fa-brain', title: 'AI Laptop Recommendation System', action: () => { closeCmdPalette(); openProjectModal('p1'); } },
+        { icon: 'fa-spa', title: 'SPA Management System (binspa.id.vn)', action: () => { closeCmdPalette(); openProjectModal('p2'); } },
+        { icon: 'fa-hospital-user', title: 'Medical Appointment Booking System (DLKB)', action: () => { closeCmdPalette(); openProjectModal('p3'); } }
+      ]
+    },
+    {
+      group: isVi ? 'Hành Động Nhanh' : 'Quick Actions',
+      items: [
+        { icon: 'fa-file-download', title: isVi ? 'Tải CV Đặng Văn Khoa (PDF)' : 'Download CV (PDF)', action: () => { window.open('./CV_Dang_Van_Khoa.pdf', '_blank'); closeCmdPalette(); } },
+        { icon: 'fa-globe', title: isVi ? 'Chuyển sang Tiếng Anh (English)' : 'Switch Language to English', action: () => { setLanguage('en'); closeCmdPalette(); } },
+        { icon: 'fa-globe-asia', title: isVi ? 'Chuyển sang Tiếng Việt (Vietnamese)' : 'Switch Language to Vietnamese', action: () => { setLanguage('vi'); closeCmdPalette(); } },
+        { icon: 'fa-adjust', title: isVi ? 'Bật/Tắt Giao Diện Dark/Light' : 'Toggle Dark/Light Theme', action: () => { document.getElementById('themeToggle').click(); closeCmdPalette(); } }
+      ]
+    }
+  ];
+}
+
+function scrollToSection(selector) {
+  closeCmdPalette();
+  const target = document.querySelector(selector);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function renderCmdResults(query) {
+  const container = document.getElementById('cmdResults');
+  if (!container) return;
+
+  const data = getCmdData();
+  let html = '';
+  let globalItemIdx = 0;
+  cmdItemsList = [];
+
+  data.forEach(group => {
+    const filteredItems = group.items.filter(item => item.title.toLowerCase().includes(query));
+    if (filteredItems.length > 0) {
+      html += `<div class="cmd-group-title">${group.group}</div>`;
+      filteredItems.forEach(item => {
+        const itemIdx = globalItemIdx++;
+        cmdItemsList.push(item);
+        const isSelected = itemIdx === cmdSelectedIdx;
+        html += `
+          <div class="cmd-item ${isSelected ? 'selected' : ''}" data-idx="${itemIdx}">
+            <div class="cmd-item-left">
+              <div class="cmd-item-icon"><i class="fas ${item.icon}"></i></div>
+              <span>${item.title}</span>
+            </div>
+            <span class="cmd-item-badge">↵ Chọn</span>
+          </div>
+        `;
+      });
+    }
+  });
+
+  if (globalItemIdx === 0) {
+    html = `<div style="padding: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+      <i class="fas fa-search-minus" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block; color: var(--text-dim);"></i>
+      Không tìm thấy kết quả phù hợp cho "${query}"
+    </div>`;
+  }
+
+  container.innerHTML = html;
+
+  container.querySelectorAll('.cmd-item').forEach(elem => {
+    elem.addEventListener('click', () => {
+      const idx = parseInt(elem.getAttribute('data-idx'), 10);
+      if (cmdItemsList[idx] && cmdItemsList[idx].action) {
+        cmdItemsList[idx].action();
+      }
+    });
+  });
+}
+
+function updateCmdSelection(items) {
+  items.forEach((item, idx) => {
+    if (idx === cmdSelectedIdx) {
+      item.classList.add('selected');
+      item.scrollIntoView({ block: 'nearest' });
+    } else {
+      item.classList.remove('selected');
+    }
+  });
+}
+
+// --- 16. Skill-to-Project Interactive Highlighting ---
+function initSkillHighlighting() {
+  const skillTags = document.querySelectorAll('.skill-tag');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  skillTags.forEach(tag => {
+    const text = tag.textContent.toLowerCase().trim();
+
+    tag.addEventListener('mouseenter', () => {
+      projectCards.forEach(card => {
+        const skillsAttr = card.getAttribute('data-skills') || '';
+        if (checkSkillMatch(text, skillsAttr)) {
+          card.classList.add('project-highlight');
+          card.classList.remove('project-dimmed');
+        } else {
+          card.classList.add('project-dimmed');
+          card.classList.remove('project-highlight');
+        }
+      });
+    });
+
+    tag.addEventListener('mouseleave', () => {
+      projectCards.forEach(card => {
+        card.classList.remove('project-highlight', 'project-dimmed');
+      });
+    });
+  });
+}
+
+function checkSkillMatch(skillText, cardSkills) {
+  if (skillText.includes('python') && cardSkills.includes('python')) return true;
+  if (skillText.includes('flask') && cardSkills.includes('flask')) return true;
+  if (skillText.includes('react') && cardSkills.includes('reactjs')) return true;
+  if (skillText.includes('postgres') && cardSkills.includes('postgresql')) return true;
+  if (skillText.includes('flutter') && cardSkills.includes('flutter')) return true;
+  if ((skillText.includes('js') || skillText.includes('javascript')) && cardSkills.includes('javascript')) return true;
+  if (skillText.includes('dart') && cardSkills.includes('dart')) return true;
+  return false;
 }
