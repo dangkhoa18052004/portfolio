@@ -627,21 +627,50 @@ function initContactForm() {
       btn.disabled = true;
 
       const formData = new FormData(form);
+      const dataObj = Object.fromEntries(formData);
 
+      // Check if running on local file system (file://)
+      if (window.location.protocol === 'file:') {
+        setTimeout(() => {
+          btn.innerHTML = origText;
+          btn.disabled = false;
+          statusMsg.style.display = 'block';
+          statusMsg.style.background = 'rgba(234, 179, 8, 0.15)';
+          statusMsg.style.borderColor = '#eab308';
+          statusMsg.style.color = '#eab308';
+          
+          const isVi = currentLang === 'vi';
+          statusMsg.innerHTML = isVi 
+            ? '<strong>Lưu ý:</strong> Khi xem file cục bộ trên máy (file://), dịch vụ mail tự động bị chặn bảo mật. Tính năng gửi mail sẽ <strong>tự động kích hoạt 100% khi bạn deploy trang web lên Vercel</strong>! Mở ứng dụng Email của bạn để gửi ngay...'
+            : '<strong>Note:</strong> Browsing as a local file (file://) blocks direct API mail delivery. Email forwarding will <strong>work automatically once deployed to Vercel</strong>! Opening your email client...';
+
+          // Open mailto fallback for local testing
+          const subject = encodeURIComponent(dataObj._subject || 'Liên hệ từ Portfolio');
+          const body = encodeURIComponent(`Họ tên: ${dataObj.name}\nEmail: ${dataObj.email}\n\nNội dung:\n${dataObj.message}`);
+          window.location.href = `mailto:dangkhoa18052004qni@gmail.com?subject=${subject}&body=${body}`;
+
+          form.reset();
+        }, 1000);
+        return;
+      }
+
+      // Online Web Server / Vercel Environment Submissions
       fetch('https://formsubmit.co/ajax/dangkhoa18052004qni@gmail.com', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify(Object.fromEntries(formData))
+        body: JSON.stringify(dataObj)
       })
       .then(response => response.json())
       .then(data => {
         btn.innerHTML = origText;
         btn.disabled = false;
         statusMsg.style.display = 'block';
-        statusMsg.className = 'form-status success';
+        statusMsg.style.background = 'rgba(16, 185, 129, 0.15)';
+        statusMsg.style.borderColor = '#10b981';
+        statusMsg.style.color = '#10b981';
         statusMsg.textContent = translations[currentLang].form_success;
         form.reset();
 
@@ -654,6 +683,7 @@ function initContactForm() {
         btn.innerHTML = origText;
         btn.disabled = false;
         statusMsg.style.display = 'block';
+        statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
         statusMsg.style.borderColor = '#ef4444';
         statusMsg.style.color = '#ef4444';
         statusMsg.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again.';
