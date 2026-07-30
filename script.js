@@ -227,7 +227,7 @@ const translations = {
 let currentLang = localStorage.getItem('portfolio_lang') || 'vi';
 let currentTheme = localStorage.getItem('portfolio_theme') || 'dark';
 
-// --- Initialize Page ---
+// --- Initialize Page & Animations ---
 document.addEventListener('DOMContentLoaded', () => {
   initLanguage();
   initTheme();
@@ -235,6 +235,14 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilters();
   initContactForm();
   initMobileMenu();
+
+  // Modern Animation Modules
+  initScrollProgress();
+  initScrollReveal();
+  initTypingEffect();
+  initParticleCanvas();
+  initStatsCounter();
+  init3DTilt();
 });
 
 // --- Language Switcher ---
@@ -679,15 +687,292 @@ function initContactForm() {
         }, 6000);
       })
       .catch(error => {
-        console.error('Error submitting form:', error);
-        btn.innerHTML = origText;
-        btn.disabled = false;
-        statusMsg.style.display = 'block';
-        statusMsg.style.background = 'rgba(239, 68, 68, 0.15)';
-        statusMsg.style.borderColor = '#ef4444';
-        statusMsg.style.color = '#ef4444';
         statusMsg.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again.';
       });
     });
   }
+}
+
+// ==========================================================================
+// MODERN ANIMATION & INTERACTIVITY MODULES (60FPS ACCELERATED)
+// ==========================================================================
+
+// --- 1. Scroll Progress Bar ---
+function initScrollProgress() {
+  const progressBar = document.getElementById('scrollProgress');
+  if (!progressBar) return;
+
+  window.addEventListener('scroll', () => {
+    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+    if (totalScroll <= 0) return;
+    const progress = (window.scrollY / totalScroll) * 100;
+    progressBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+  });
+}
+
+// --- 2. Scroll Reveal Animations (Intersection Observer) ---
+function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal');
+  if (!revealElements.length) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.15
+  };
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        // Optionally unobserve to animate only once
+        // observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealElements.forEach(elem => revealObserver.observe(elem));
+}
+
+// --- 3. Dynamic Typing Effect (Bilingual) ---
+const typingWords = {
+  vi: [
+    "Thực Tập Sinh Phát Triển Phần Mềm",
+    "Lập Trình Viên Full-Stack & Backend",
+    "Chuyên Gia RESTful API & PostgreSQL",
+    "Phát Triển Python Flask & ReactJS"
+  ],
+  en: [
+    "Software Engineering Intern",
+    "Full-Stack & Backend Developer",
+    "RESTful API & PostgreSQL Specialist",
+    "Python Flask & ReactJS Engineer"
+  ]
+};
+
+let typingWordIdx = 0;
+let typingCharIdx = 0;
+let isDeleting = false;
+let typingTimeout = null;
+
+function initTypingEffect() {
+  const targetElem = document.getElementById('typingRole');
+  if (!targetElem) return;
+
+  clearTimeout(typingTimeout);
+  typeLoop();
+}
+
+function typeLoop() {
+  const targetElem = document.getElementById('typingRole');
+  if (!targetElem) return;
+
+  const words = typingWords[currentLang] || typingWords['vi'];
+  const currentWord = words[typingWordIdx % words.length];
+
+  if (isDeleting) {
+    typingCharIdx--;
+    targetElem.textContent = currentWord.substring(0, typingCharIdx);
+  } else {
+    typingCharIdx++;
+    targetElem.textContent = currentWord.substring(0, typingCharIdx);
+  }
+
+  let delay = isDeleting ? 40 : 80;
+
+  if (!isDeleting && typingCharIdx === currentWord.length) {
+    delay = 2000; // Pause at full word
+    isDeleting = true;
+  } else if (isDeleting && typingCharIdx === 0) {
+    isDeleting = false;
+    typingWordIdx++;
+    delay = 500; // Pause before next word
+  }
+
+  typingTimeout = setTimeout(typeLoop, delay);
+}
+
+// Update typing words when language changes
+const origSetLanguage = setLanguage;
+setLanguage = function(lang) {
+  origSetLanguage(lang);
+  typingWordIdx = 0;
+  typingCharIdx = 0;
+  isDeleting = false;
+  initTypingEffect();
+};
+
+// --- 4. Interactive Particle Canvas Background ---
+function initParticleCanvas() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let particles = [];
+  let mouse = { x: null, y: null, radius: 120 };
+
+  function resize() {
+    width = canvas.width = canvas.parentElement.offsetWidth;
+    height = canvas.height = canvas.parentElement.offsetHeight;
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.vx = (Math.random() - 0.5) * 0.8;
+      this.vy = (Math.random() - 0.5) * 0.8;
+      this.radius = Math.random() * 2 + 1;
+      this.color = Math.random() > 0.5 ? '#00f2fe' : '#7f53ac';
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < 0 || this.x > width) this.vx *= -1;
+      if (this.y < 0 || this.y > height) this.vy *= -1;
+
+      // Mouse interactivity
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x -= (dx / dist) * force * 3;
+          this.y -= (dy / dist) * force * 3;
+        }
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = 0.4;
+      ctx.fill();
+    }
+  }
+
+  // Generate particles
+  const count = Math.min(60, Math.floor((width * height) / 15000));
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    // Draw connecting lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 130) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = '#00f2fe';
+          ctx.globalAlpha = (1 - dist / 130) * 0.15;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+// --- 5. Animated Stats Counter ---
+function initStatsCounter() {
+  const statNumbers = document.querySelectorAll('.stat-count');
+  if (!statNumbers.length) return;
+
+  let animated = false;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animated) {
+        animated = true;
+        statNumbers.forEach(stat => {
+          const target = parseInt(stat.getAttribute('data-target'), 10);
+          if (isNaN(target)) return;
+
+          let count = 0;
+          const duration = 1500; // ms
+          const stepTime = 20;
+          const increment = Math.max(1, Math.ceil(target / (duration / stepTime)));
+
+          const timer = setInterval(() => {
+            count += increment;
+            if (count >= target) {
+              stat.textContent = target;
+              clearInterval(timer);
+            } else {
+              stat.textContent = count;
+            }
+          }, stepTime);
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsSection = document.querySelector('.about-stats');
+  if (statsSection) observer.observe(statsSection);
+}
+
+// --- 6. 3D Tilt Card Effect ---
+function init3DTilt() {
+  // Disable on mobile/touch devices for performance
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
+  const tiltCards = document.querySelectorAll('.tilt-card');
+
+  tiltCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -8; // Max 8 deg
+      const rotateY = ((x - centerX) / centerX) * 8;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      card.style.boxShadow = `0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 242, 254, 0.25)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      card.style.boxShadow = '';
+    });
+  });
 }

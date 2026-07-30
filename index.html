@@ -26,6 +26,9 @@
 
 <body>
 
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
   <!-- ==================== HEADER / NAVIGATION ==================== -->
   <header class="header">
     <div class="container">
@@ -75,10 +78,11 @@
   <main>
     <!-- ==================== HERO SECTION ==================== -->
     <section id="hero" class="hero">
+      <canvas id="heroCanvas" class="hero-canvas"></canvas>
       <div class="hero-background-glow"></div>
       <div class="container">
         <div class="hero-grid">
-          <div class="hero-content">
+          <div class="hero-content reveal reveal-left">
             <div class="hero-badge">
               <i class="fas fa-circle"></i>
               <span data-i18n="hero_badge">Sẵn sàng nhận vị trí Thực Tập Sinh</span>
@@ -89,9 +93,8 @@
               <span class="text-gradient" data-i18n="hero_title">Đặng Văn Khoa</span>
             </h1>
 
-            <h2 style="font-size: 1.5rem; color: var(--primary-accent); margin-bottom: 1rem; font-weight: 700;"
-              data-i18n="hero_role">
-              Thực Tập Sinh Phát Triển Phần Mềm
+            <h2 style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 700; min-height: 2.25rem;">
+              <span id="typingRole" class="typing-role" data-i18n="hero_role">Thực Tập Sinh Phát Triển Phần Mềm</span><span class="typing-cursor">|</span>
             </h2>
 
             <p class="hero-subtitle" data-i18n="hero_subtitle">
@@ -123,8 +126,8 @@
             </div>
           </div>
 
-          <div class="hero-visual">
-            <div class="avatar-wrapper">
+          <div class="hero-visual reveal reveal-right">
+            <div class="avatar-wrapper tilt-card">
               <img src="./assets/avatar.png" alt="Đặng Văn Khoa Avatar" class="avatar-img">
             </div>
 
@@ -149,13 +152,13 @@
     <!-- ==================== ABOUT SECTION ==================== -->
     <section id="about" class="section-padding">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="section-tag" data-i18n="about_tag">TỔNG QUAN</span>
           <h2 class="section-title" data-i18n="about_title">Giới Thiệu Bản Thân</h2>
         </div>
 
         <div class="about-grid">
-          <div class="about-card">
+          <div class="about-card reveal reveal-left">
             <p class="about-text" data-i18n="about_text_1">
               Tôi là sinh viên ngành Kỹ thuật Phần mềm tại Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh (2022 -
               2026), có kinh nghiệm thực tế trong việc thiết kế và phát triển ứng dụng Full-stack, các dịch vụ Backend
@@ -167,21 +170,21 @@
             </p>
           </div>
 
-          <div class="about-stats">
-            <div class="stat-item">
-              <div class="stat-number">03+</div>
+          <div class="about-stats reveal reveal-right">
+            <div class="stat-item tilt-card">
+              <div class="stat-number"><span class="stat-count" data-target="3">0</span>+</div>
               <div class="stat-label" data-i18n="stat_projects">Dự Án Hoàn Thành</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">03</div>
+            <div class="stat-item tilt-card">
+              <div class="stat-number"><span class="stat-count" data-target="3">0</span></div>
               <div class="stat-label" data-i18n="stat_experience">Tháng Thực Tập</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">10+</div>
+            <div class="stat-item tilt-card">
+              <div class="stat-number"><span class="stat-count" data-target="10">0</span>+</div>
               <div class="stat-label" data-i18n="stat_tech">Công Nghệ Sử Dụng</div>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">100%</div>
+            <div class="stat-item tilt-card">
+              <div class="stat-number"><span class="stat-count" data-target="100">0</span>%</div>
               <div class="stat-label" data-i18n="stat_passion">Đam Mê Học Hỏi</div>
             </div>
           </div>
@@ -192,7 +195,7 @@
     <!-- ==================== SKILLS SECTION ==================== -->
     <section id="skills" class="section-padding" style="background: var(--bg-secondary);">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="section-tag" data-i18n="skills_tag">CHUYÊN MÔN</span>
           <h2 class="section-title" data-i18n="skills_title">Kỹ Năng & Công Nghệ</h2>
           <p class="section-description" data-i18n="skills_desc">
@@ -202,7 +205,7 @@
 
         <div class="skills-grid">
           <!-- Languages -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-1">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-code"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_languages">Ngôn Ngữ Lập Trình</h3>
@@ -216,7 +219,7 @@
           </div>
 
           <!-- Backend -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-2">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-server"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_backend">Backend & API</h3>
@@ -229,7 +232,7 @@
           </div>
 
           <!-- Databases -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-3">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-database"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_database">Cơ Sở Dữ Liệu</h3>
@@ -242,7 +245,7 @@
           </div>
 
           <!-- Frontend -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-1">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-laptop-code"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_frontend">Frontend & UI</h3>
@@ -256,7 +259,7 @@
           </div>
 
           <!-- Tools -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-2">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-tools"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_tools">Công Cụ & Môi Trường</h3>
@@ -270,7 +273,7 @@
           </div>
 
           <!-- Soft Skills -->
-          <div class="skill-category-card">
+          <div class="skill-category-card tilt-card reveal reveal-scale stagger-3">
             <div class="skill-category-header">
               <div class="skill-icon-wrapper"><i class="fas fa-user-check"></i></div>
               <h3 class="skill-category-title" data-i18n="cat_softskills">Kỹ Năng Mềm</h3>
@@ -290,7 +293,7 @@
     <!-- ==================== PROJECTS SECTION ==================== -->
     <section id="projects" class="section-padding">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="section-tag" data-i18n="projects_tag">SẢN PHẨM</span>
           <h2 class="section-title" data-i18n="projects_title">Dự Án Nổi Bật</h2>
           <p class="section-description" data-i18n="projects_desc">
@@ -300,7 +303,7 @@
         </div>
 
         <!-- Category Filters -->
-        <div class="project-filters">
+        <div class="project-filters reveal">
           <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Tất Cả</button>
           <button class="filter-btn" data-filter="fullstack" data-i18n="filter_fullstack">Full-Stack</button>
           <button class="filter-btn" data-filter="backend" data-i18n="filter_backend">Backend & Mobile</button>
@@ -309,7 +312,7 @@
 
         <div class="projects-grid">
           <!-- Project 1: AI Laptop Recommendation System -->
-          <div class="project-card" data-category="fullstack ai">
+          <div class="project-card tilt-card reveal stagger-1" data-category="fullstack ai">
             <div class="project-img-wrapper">
               <img src="./assets/project-laptop.png" alt="AI Laptop Recommendation System" class="project-img">
               <span class="project-year-badge">2025</span>
@@ -344,7 +347,7 @@
           </div>
 
           <!-- Project 2: SPA Management System -->
-          <div class="project-card" data-category="fullstack">
+          <div class="project-card tilt-card reveal stagger-2" data-category="fullstack">
             <div class="project-img-wrapper">
               <img src="./assets/project-spa.png" alt="SPA Management System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -378,7 +381,7 @@
           </div>
 
           <!-- Project 3: Medical Appointment Booking System (DLKB) -->
-          <div class="project-card" data-category="backend">
+          <div class="project-card tilt-card reveal stagger-3" data-category="backend">
             <div class="project-img-wrapper">
               <img src="./assets/project-medical.png" alt="Medical Appointment Booking System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -415,21 +418,21 @@
     <!-- ==================== EXPERIENCE & EDUCATION ==================== -->
     <section id="experience" class="section-padding" style="background: var(--bg-secondary);">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="section-tag" data-i18n="exp_tag">HÀNH TRÌNH</span>
           <h2 class="section-title" data-i18n="exp_title">Kinh Nghiệm & Học Vấn</h2>
         </div>
 
         <div class="timeline-grid">
           <!-- Work Experience Column -->
-          <div>
+          <div class="reveal reveal-left">
             <h3 class="timeline-column-title">
               <i class="fas fa-briefcase"></i> <span data-i18n="timeline_work">Kinh Nghiệm Làm Việc</span>
             </h3>
             <div class="timeline-list">
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-card">
+                <div class="timeline-card tilt-card">
                   <div class="timeline-date">04/2026 - 06/2026</div>
                   <h4 class="timeline-title" data-i18n="work_role_1">Thực Tập Sinh Phần Mềm</h4>
                   <div class="timeline-company" data-i18n="work_company_1">Automation Land (04/2026 - 06/2026)</div>
@@ -445,14 +448,14 @@
           </div>
 
           <!-- Education Column -->
-          <div id="education">
+          <div id="education" class="reveal reveal-right">
             <h3 class="timeline-column-title">
               <i class="fas fa-graduation-cap"></i> <span data-i18n="timeline_edu">Học Vấn & Bằng Cấp</span>
             </h3>
             <div class="timeline-list">
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
-                <div class="timeline-card">
+                <div class="timeline-card tilt-card">
                   <div class="timeline-date" data-i18n="edu_years">2022 - 2026</div>
                   <h4 class="timeline-title" data-i18n="edu_degree">Cử nhân Kỹ thuật Phần mềm</h4>
                   <div class="timeline-company" data-i18n="edu_school">Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh
@@ -472,7 +475,7 @@
     <!-- ==================== CONTACT SECTION ==================== -->
     <section id="contact" class="section-padding">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal">
           <span class="section-tag" data-i18n="contact_tag">KẾT NỐI</span>
           <h2 class="section-title" data-i18n="contact_title">Liên Hệ Với Tôi</h2>
           <p class="section-description" data-i18n="contact_desc">
@@ -481,9 +484,9 @@
         </div>
 
         <div class="contact-grid">
-          <div class="contact-info-cards">
+          <div class="contact-info-cards reveal reveal-left">
             <!-- Phone Card -->
-            <div class="contact-info-card">
+            <div class="contact-info-card tilt-card">
               <div class="contact-info-main">
                 <div class="contact-icon-box"><i class="fas fa-phone-alt"></i></div>
                 <div>
@@ -497,7 +500,7 @@
             </div>
 
             <!-- Email Card -->
-            <div class="contact-info-card">
+            <div class="contact-info-card tilt-card">
               <div class="contact-info-main">
                 <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
                 <div>
@@ -511,7 +514,7 @@
             </div>
 
             <!-- Location Card -->
-            <div class="contact-info-card">
+            <div class="contact-info-card tilt-card">
               <div class="contact-info-main">
                 <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
                 <div>
@@ -522,7 +525,7 @@
             </div>
 
             <!-- GitHub Card -->
-            <div class="contact-info-card">
+            <div class="contact-info-card tilt-card">
               <div class="contact-info-main">
                 <div class="contact-icon-box"><i class="fab fa-github"></i></div>
                 <div>
@@ -537,7 +540,7 @@
           </div>
 
           <!-- Contact Form with FormSubmit integration to Gmail -->
-          <div class="contact-form-card">
+          <div class="contact-form-card reveal reveal-right">
             <form id="contactForm" action="https://formsubmit.co/dangkhoa18052004qni@gmail.com" method="POST">
               <!-- FormSubmit Configuration Fields -->
               <input type="hidden" name="_template" value="table">
