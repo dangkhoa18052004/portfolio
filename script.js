@@ -481,7 +481,7 @@ const projectData = {
   p3: {
     title: "Medical Appointment Booking System (DLKB)",
     role: "Backend & Mobile Developer | Flask, Flutter, PostgreSQL",
-    demoUrl: "https://github.com/dangkhoa18052004/DLKB.git",
+    demoUrl: null,
     githubUrl: "https://github.com/dangkhoa18052004/DLKB.git",
     gallery: [
       "./assets/project-medical.png"
