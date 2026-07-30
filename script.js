@@ -26,7 +26,7 @@ const translations = {
     // About Section
     about_tag: "TỔNG QUAN",
     about_title: "Giới Thiệu Bản Thân",
-    about_text_1: "Tôi là sinh viên ngành Kỹ thuật Phần mềm tại Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh (2022 - 2026), có kinh nghiệm thực tế trong việc thiết kế và phát triển ứng dụng Full-stack, các dịch vụ Backend chuẩn RESTful API và các hệ thống hỗ trợ quyết định thông minh bằng Python Flask & PostgreSQL.",
+    about_text_1: "Tôi là sinh viên năm 4 ngành Kỹ thuật Phần mềm tại Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh (2022 - 04/2027, dự kiến tốt nghiệp), có kinh nghiệm thực tế trong việc thiết kế và phát triển ứng dụng Full-stack, các dịch vụ Backend chuẩn RESTful API và các hệ thống hỗ trợ quyết định thông minh bằng Python Flask & PostgreSQL.",
     about_text_2: "Mong muốn ứng dụng kiến thức chuyên môn về thiết kế CSDL, xác thực JWT, lập trình ứng dụng di động Flutter và xây dựng giao diện responsive để đóng góp giá trị cho các dự án phần mềm thực tế.",
     stat_projects: "Dự Án Hoàn Thành",
     stat_experience: "Tháng Thực Tập",
@@ -86,9 +86,9 @@ const translations = {
     work_bullet_1: "Thực hiện kiểm thử chức năng, giao diện, hồi quy và API cơ bản theo yêu cầu dự án.",
     work_bullet_2: "Thiết kế test case, ghi nhận lỗi (bugs), xác minh bản sửa lỗi và phối hợp chặt chẽ với đội ngũ phát triển.",
 
-    edu_degree: "Cử nhân Kỹ thuật Phần mềm",
+    edu_degree: "Sinh viên năm 4 - Ngành Kỹ thuật Phần mềm",
     edu_school: "Đại học Tài nguyên và Môi trường TP. Hồ Chí Minh",
-    edu_years: "2022 - 2026",
+    edu_years: "2022 - 04/2027 (Dự kiến tốt nghiệp)",
     edu_desc: "Đào tạo bài bản về tư duy thuật toán, thiết kế hệ thống phần mềm, cơ sở dữ liệu và quy trình phát triển Agile/Scrum.",
 
     // Contact Section
@@ -135,7 +135,7 @@ const translations = {
     // About Section
     about_tag: "OVERVIEW",
     about_title: "About Me",
-    about_text_1: "I am a Software Engineering student at Ho Chi Minh City University of Natural Resources and Environment (2022 - 2026), with hands-on experience in building Full-stack web applications, RESTful Backend services, and decision-support recommendation systems using Python Flask & PostgreSQL.",
+    about_text_1: "I am a 4th-year Software Engineering student at Ho Chi Minh City University of Natural Resources and Environment (2022 - 04/2027, expected graduation), with hands-on experience in building Full-stack web applications, RESTful Backend services, and recommendation systems using Python Flask & PostgreSQL.",
     about_text_2: "Eager to apply strong foundations in database design, JWT authentication, Flutter mobile app development, and responsive UI engineering to deliver real-world software solutions.",
     stat_projects: "Completed Projects",
     stat_experience: "Months Internship",
@@ -195,9 +195,9 @@ const translations = {
     work_bullet_1: "Executed functional, UI, regression, and API testing per project requirements.",
     work_bullet_2: "Designed test cases, logged bugs, verified fixes, and collaborated closely with the software engineering team.",
 
-    edu_degree: "Bachelor in Software Engineering",
+    edu_degree: "4th-Year Software Engineering Student",
     edu_school: "Ho Chi Minh City University of Natural Resources and Environment",
-    edu_years: "2022 - 2026",
+    edu_years: "2022 - 04/2027 (Expected Graduation)",
     edu_desc: "Rigorous coursework in software architecture, database design, algorithms, web development, and Agile/Scrum practices.",
 
     // Contact Section
@@ -739,13 +739,13 @@ const typingWords = {
   vi: [
     "Thực Tập Sinh Phát Triển Phần Mềm",
     "Lập Trình Viên Full-Stack & Backend",
-    "Chuyên Gia RESTful API & PostgreSQL",
+    "Phát Triển RESTful API & PostgreSQL",
     "Phát Triển Python Flask & ReactJS"
   ],
   en: [
     "Software Engineering Intern",
     "Full-Stack & Backend Developer",
-    "RESTful API & PostgreSQL Specialist",
+    "RESTful API & PostgreSQL Developer",
     "Python Flask & ReactJS Engineer"
   ]
 };
