@@ -385,9 +385,24 @@ button {
 
 .mobile-menu-btn {
   display: none;
-  font-size: 1.5rem;
-  color: var(--text-main);
-  background: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 242, 254, 0.1);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  color: var(--primary-accent);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.mobile-menu-btn:hover {
+  background: var(--primary-accent);
+  color: #0a0f1d;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
 }
 
 /* --- Hero Section --- */
@@ -1732,9 +1747,13 @@ body.cursor-hover .cursor-ring {
   }
 
   .mobile-menu-btn {
+    display: inline-flex !important;
     width: 34px;
     height: 34px;
     font-size: 1.05rem;
+    color: var(--primary-accent);
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.35);
   }
 
   .hero-subtitle {
