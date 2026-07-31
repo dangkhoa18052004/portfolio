@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PORTFOLIO INTERACTIVE & I18N SCRIPT - ĐẶNG VĂN KHOA
+   PORTFOLIO INTERACTIVE & I18N SCRIPT v2 - ĐẶNG VĂN KHOA
    ========================================================================== */
 
 // --- Translation Dictionary (VI & EN) ---
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- Language Switcher ---
 function initLanguage() {
   setLanguage(currentLang);
-  
+
   const langBtns = document.querySelectorAll('.lang-btn');
   langBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -749,9 +749,9 @@ function initContactForm() {
           statusMsg.style.background = 'rgba(234, 179, 8, 0.15)';
           statusMsg.style.borderColor = '#eab308';
           statusMsg.style.color = '#eab308';
-          
+
           const isVi = currentLang === 'vi';
-          statusMsg.innerHTML = isVi 
+          statusMsg.innerHTML = isVi
             ? '<strong>Lưu ý:</strong> Khi xem file cục bộ trên máy (file://), dịch vụ mail tự động bị chặn bảo mật. Tính năng gửi mail sẽ <strong>tự động kích hoạt 100% khi bạn deploy trang web lên Vercel</strong>! Mở ứng dụng Email của bạn để gửi ngay...'
             : '<strong>Note:</strong> Browsing as a local file (file://) blocks direct API mail delivery. Email forwarding will <strong>work automatically once deployed to Vercel</strong>! Opening your email client...';
 
@@ -768,30 +768,30 @@ function initContactForm() {
       // Online Web Server / Vercel Environment Submissions
       fetch('https://formsubmit.co/ajax/dangkhoa18052004qni@gmail.com', {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify(dataObj)
       })
-      .then(response => response.json())
-      .then(data => {
-        btn.innerHTML = origText;
-        btn.disabled = false;
-        statusMsg.style.display = 'block';
-        statusMsg.style.background = 'rgba(16, 185, 129, 0.15)';
-        statusMsg.style.borderColor = '#10b981';
-        statusMsg.style.color = '#10b981';
-        statusMsg.textContent = translations[currentLang].form_success;
-        form.reset();
+        .then(response => response.json())
+        .then(data => {
+          btn.innerHTML = origText;
+          btn.disabled = false;
+          statusMsg.style.display = 'block';
+          statusMsg.style.background = 'rgba(16, 185, 129, 0.15)';
+          statusMsg.style.borderColor = '#10b981';
+          statusMsg.style.color = '#10b981';
+          statusMsg.textContent = translations[currentLang].form_success;
+          form.reset();
 
-        setTimeout(() => {
-          statusMsg.style.display = 'none';
-        }, 6000);
-      })
-      .catch(error => {
-        statusMsg.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again.';
-      });
+          setTimeout(() => {
+            statusMsg.style.display = 'none';
+          }, 6000);
+        })
+        .catch(error => {
+          statusMsg.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra, vui lòng thử lại sau.' : 'An error occurred, please try again.';
+        });
     });
   }
 }
@@ -828,8 +828,6 @@ function initScrollReveal() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        // Optionally unobserve to animate only once
-        // observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
@@ -884,26 +882,16 @@ function typeLoop() {
   let delay = isDeleting ? 40 : 80;
 
   if (!isDeleting && typingCharIdx === currentWord.length) {
-    delay = 2000; // Pause at full word
+    delay = 2000;
     isDeleting = true;
   } else if (isDeleting && typingCharIdx === 0) {
     isDeleting = false;
     typingWordIdx++;
-    delay = 500; // Pause before next word
+    delay = 500;
   }
 
   typingTimeout = setTimeout(typeLoop, delay);
 }
-
-// Update typing words when language changes
-const origSetLanguage = setLanguage;
-setLanguage = function(lang) {
-  origSetLanguage(lang);
-  typingWordIdx = 0;
-  typingCharIdx = 0;
-  isDeleting = false;
-  initTypingEffect();
-};
 
 // --- 4. Interactive Particle Canvas Background ---
 function initParticleCanvas() {
@@ -951,7 +939,6 @@ function initParticleCanvas() {
       if (this.x < 0 || this.x > width) this.vx *= -1;
       if (this.y < 0 || this.y > height) this.vy *= -1;
 
-      // Mouse interactivity
       if (mouse.x !== null && mouse.y !== null) {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
@@ -973,7 +960,6 @@ function initParticleCanvas() {
     }
   }
 
-  // Generate particles
   const count = Math.min(60, Math.floor((width * height) / 15000));
   for (let i = 0; i < count; i++) {
     particles.push(new Particle());
@@ -982,7 +968,6 @@ function initParticleCanvas() {
   function animate() {
     ctx.clearRect(0, 0, width, height);
 
-    // Draw connecting lines between particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -1001,7 +986,6 @@ function initParticleCanvas() {
       }
     }
 
-    // Draw active neural connection to mouse cursor
     if (mouse.x !== null && mouse.y !== null) {
       particles.forEach(p => {
         const dx = mouse.x - p.x;
@@ -1046,7 +1030,7 @@ function initStatsCounter() {
           if (isNaN(target)) return;
 
           let count = 0;
-          const duration = 1500; // ms
+          const duration = 1500;
           const stepTime = 20;
           const increment = Math.max(1, Math.ceil(target / (duration / stepTime)));
 
@@ -1070,7 +1054,6 @@ function initStatsCounter() {
 
 // --- 6. 3D Tilt Card Effect ---
 function init3DTilt() {
-  // Disable on mobile/touch devices for performance
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
 
   const tiltCards = document.querySelectorAll('.tilt-card');
@@ -1084,7 +1067,7 @@ function init3DTilt() {
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = ((y - centerY) / centerY) * -8; // Max 8 deg
+      const rotateX = ((y - centerY) / centerY) * -8;
       const rotateY = ((x - centerX) / centerX) * 8;
 
       card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
@@ -1098,13 +1081,8 @@ function init3DTilt() {
   });
 }
 
-// ==========================================================================
-// PHASE 2 MODULES (CURSOR, SPOTLIGHT, SKILL BARS, HOVER SLIDESHOW, BACK-TO-TOP)
-// ==========================================================================
-
 // --- 7. Custom Glowing Pointer Cursor ---
 function initCustomCursor() {
-  // Disable on mobile/touch devices
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 992) return;
 
   const dot = document.getElementById('cursorDot');
@@ -1130,7 +1108,6 @@ function initCustomCursor() {
   }
   renderRing();
 
-  // Expand ring on interactive elements
   const interactiveElems = document.querySelectorAll('a, button, .project-card, .skill-category-card, .social-link, .stat-item');
   interactiveElems.forEach(elem => {
     elem.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
@@ -1221,7 +1198,7 @@ function initBackToTop() {
   const circle = document.getElementById('backToTopCircle');
   if (!btn || !circle) return;
 
-  const circumference = 2 * Math.PI * 22; // r=22 -> ~138.2
+  const circumference = 2 * Math.PI * 22;
   circle.style.strokeDasharray = `${circumference}`;
 
   window.addEventListener('scroll', () => {
@@ -1241,10 +1218,6 @@ function initBackToTop() {
     }
   });
 }
-
-// ==========================================================================
-// PHASE 3 MODULES (TIME GREETING, MAGNETIC BTNS, COMMAND PALETTE, AUDIO FX, SKILL MATCH)
-// ==========================================================================
 
 // --- 12. Real-time Dynamic Time Greeting ---
 function initTimeGreeting() {
@@ -1273,7 +1246,7 @@ function initTimeGreeting() {
 function initMagneticButtons() {
   if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 992) return;
 
-  const magElements = document.querySelectorAll('.btn, .btn-project, .btn-cv-header, .social-link, .cmd-k-trigger, .sound-toggle');
+  const magElements = document.querySelectorAll('.btn, .btn-project, .btn-cv-header, .social-link, .cmd-k-trigger, .sound-toggle, .cli-trigger-btn');
 
   magElements.forEach(elem => {
     elem.addEventListener('mousemove', (e) => {
@@ -1307,7 +1280,6 @@ function initAudioFX() {
     if (soundEnabled) playSound('click');
   });
 
-  // Attach sound listeners to interactive elements
   document.querySelectorAll('a, button, .project-card, .skill-tag, .nav-link, .filter-btn').forEach(elem => {
     elem.addEventListener('mouseenter', () => playSound('hover'));
     elem.addEventListener('click', () => playSound('click'));
@@ -1365,7 +1337,6 @@ function playSound(type) {
       osc.stop(now + 0.07);
     }
   } catch (e) {
-    // Silent fallback
   }
 }
 
@@ -1385,7 +1356,6 @@ function initCommandPalette() {
     triggerBtn.addEventListener('click', openCmdPalette);
   }
 
-  // Key combination listener
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
       e.preventDefault();
@@ -1451,6 +1421,7 @@ function getCmdData() {
         { icon: 'fa-code', title: isVi ? 'Kỹ Năng & Công Nghệ (#skills)' : 'Skills & Tech (#skills)', action: () => scrollToSection('#skills') },
         { icon: 'fa-laptop-code', title: isVi ? 'Dự Án Nổi Bật (#projects)' : 'Featured Projects (#projects)', action: () => scrollToSection('#projects') },
         { icon: 'fa-briefcase', title: isVi ? 'Kinh Nghiệm & Học Vấn (#experience)' : 'Experience & Education (#experience)', action: () => scrollToSection('#experience') },
+        { icon: 'fa-award', title: isVi ? 'Bằng Cấp & Chứng Chỉ (#certifications)' : 'Certifications (#certifications)', action: () => scrollToSection('#certifications') },
         { icon: 'fa-envelope', title: isVi ? 'Liên Hệ Trực Tiếp (#contact)' : 'Contact Me (#contact)', action: () => scrollToSection('#contact') }
       ]
     },
@@ -1465,6 +1436,7 @@ function getCmdData() {
     {
       group: isVi ? 'Hành Động Nhanh' : 'Quick Actions',
       items: [
+        { icon: 'fa-terminal', title: isVi ? 'Mở Developer CLI Terminal' : 'Open Developer CLI Terminal', action: () => { closeCmdPalette(); openCLITerminal(); } },
         { icon: 'fa-file-download', title: isVi ? 'Tải CV Đặng Văn Khoa (PDF)' : 'Download CV (PDF)', action: () => { window.open('./CV_Dang_Van_Khoa.pdf', '_blank'); closeCmdPalette(); } },
         { icon: 'fa-globe', title: isVi ? 'Chuyển sang Tiếng Anh (English)' : 'Switch Language to English', action: () => { setLanguage('en'); closeCmdPalette(); } },
         { icon: 'fa-globe-asia', title: isVi ? 'Chuyển sang Tiếng Việt (Vietnamese)' : 'Switch Language to Vietnamese', action: () => { setLanguage('vi'); closeCmdPalette(); } },
@@ -1663,9 +1635,9 @@ function handleCLICommand(rawCmd) {
 • <span class="cli-cmd-highlight">projects</span>   : Các dự án thực chiến nổi bật (AHP, SPA, DLKB)
 • <span class="cli-cmd-highlight">contact</span>    : Thông tin liên hệ, Email, SĐT, GitHub
 • <span class="cli-cmd-highlight">cv</span>         : Tải trực tiếp hồ sơ CV (PDF)
-• <span class="cli-cmd-highlight">matrix</span>     : Bật/Tắt giao diện Hacker Matrix Mode 🟩
-• <span class="cli-cmd-highlight">theme</span>      : Chuyển đổi giữa Dark / Light theme 🌙☀️
-• <span class="cli-cmd-highlight">sudo hire-me</span>: Gửi yêu cầu tuyển dụng đặc biệt 🎉
+• <span class="cli-cmd-highlight">matrix</span>     : Bật/Tắt giao diện Hacker Matrix Mode
+• <span class="cli-cmd-highlight">theme</span>      : Chuyển đổi giữa Dark / Light theme
+• <span class="cli-cmd-highlight">sudo hire-me</span>: Gửi yêu cầu tuyển dụng đặc biệt
 • <span class="cli-cmd-highlight">clear</span>      : Xóa lịch sử màn hình terminal
 • <span class="cli-cmd-highlight">exit</span>       : Đóng cửa sổ terminal
 `;

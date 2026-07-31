@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2.5">
 </head>
 
 <body>
@@ -53,6 +53,13 @@
         <!-- Quick Command Palette Button (Ctrl+K) -->
         <button class="cmd-k-trigger" id="cmdKTrigger" title="Tìm kiếm & Phím tắt (Ctrl+K)" aria-label="Quick Search">
           <i class="fas fa-search"></i>
+        </button>
+
+        <!-- Developer CLI Terminal Button -->
+        <button class="cli-trigger-btn" id="cliToggleBtn" title="Mở Developer Terminal (CLI)"
+          aria-label="Developer CLI">
+          <i class="fas fa-terminal"></i>
+          <span>CLI</span>
         </button>
 
         <!-- Sound FX Toggle Button -->
@@ -208,6 +215,64 @@
             </div>
           </div>
         </div>
+
+        <!-- Live GitHub Activity & Code Metrics Widget (Hidden)
+        <div class="github-metrics-card reveal reveal-scale stagger-2" style="margin-top: 2.5rem; display: none;">
+          <div class="github-metrics-header">
+            <div class="github-user-badge">
+              <i class="fab fa-github"></i>
+              <div>
+                <h4 style="margin: 0; font-size: 1.05rem; font-weight: 700;">GitHub Coding Overview</h4>
+                <a href="https://github.com/dangkhoa18052004" target="_blank"
+                  style="font-size: 0.82rem; color: var(--primary-accent);">@dangkhoa18052004</a>
+              </div>
+            </div>
+            <div class="status-indicator-badge">
+              <span class="status-dot"></span>
+              <span data-i18n="github_status">🟢 Sẵn sàng làm việc / Open for Hire</span>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <span class="metric-val">350+</span>
+              <span class="metric-lbl" data-i18n="stat_commits">GitHub Commits</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">45,000+</span>
+              <span class="metric-lbl" data-i18n="stat_loc">Dòng Code Viết</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">12+</span>
+              <span class="metric-lbl" data-i18n="stat_repos">Repositories</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">100%</span>
+              <span class="metric-lbl" data-i18n="stat_clean_code">Clean Code & Git Flow</span>
+            </div>
+          </div>
+
+          <div class="tech-dist-bar-wrapper">
+            <div class="tech-dist-header">
+              <span style="font-size: 0.85rem; color: var(--text-muted);" data-i18n="lang_dist">Phân bổ ngôn ngữ lập
+                trình chính</span>
+            </div>
+            <div class="tech-dist-bar">
+              <div class="dist-segment" style="width: 40%; background: #3776ab;" title="Python 40%"></div>
+              <div class="dist-segment" style="width: 30%; background: #f7df1e;" title="JavaScript 30%"></div>
+              <div class="dist-segment" style="width: 15%; background: #336791;" title="PostgreSQL SQL 15%"></div>
+              <div class="dist-segment" style="width: 15%; background: #02569b;" title="Dart/Flutter 15%"></div>
+            </div>
+            <div class="tech-dist-legend">
+              <span><i class="fas fa-circle" style="color: #3776ab;"></i> Python (40%)</span>
+              <span><i class="fas fa-circle" style="color: #f7df1e;"></i> JavaScript (30%)</span>
+              <span><i class="fas fa-circle" style="color: #336791;"></i> SQL (15%)</span>
+              <span><i class="fas fa-circle" style="color: #02569b;"></i> Dart/Flutter (15%)</span>
+            </div>
+          </div>
+        </div>
+        -->
+
       </div>
     </section>
 
@@ -415,7 +480,8 @@
 
         <div class="projects-grid">
           <!-- Project 1: AI Laptop Recommendation System -->
-          <div class="project-card tilt-card reveal stagger-1" data-category="fullstack ai" data-skills="python flask reactjs postgresql ahp javascript">
+          <div class="project-card tilt-card reveal stagger-1" data-category="fullstack ai"
+            data-skills="python flask reactjs postgresql ahp javascript">
             <div class="project-img-wrapper">
               <img src="./assets/project-laptop.png" alt="AI Laptop Recommendation System" class="project-img">
               <span class="project-year-badge">2025</span>
@@ -450,7 +516,8 @@
           </div>
 
           <!-- Project 2: SPA Management System -->
-          <div class="project-card tilt-card reveal stagger-2" data-category="fullstack" data-skills="python flask javascript postgresql realtime html css">
+          <div class="project-card tilt-card reveal stagger-2" data-category="fullstack"
+            data-skills="python flask javascript postgresql realtime html css">
             <div class="project-img-wrapper">
               <img src="./assets/project-spa.png" alt="SPA Management System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -484,7 +551,8 @@
           </div>
 
           <!-- Project 3: Medical Appointment Booking System (DLKB) -->
-          <div class="project-card tilt-card reveal stagger-3" data-category="backend" data-skills="python flask flutter dart postgresql jwt restapi">
+          <div class="project-card tilt-card reveal stagger-3" data-category="backend"
+            data-skills="python flask flutter dart postgresql jwt restapi">
             <div class="project-img-wrapper">
               <img src="./assets/project-medical.png" alt="Medical Appointment Booking System" class="project-img">
               <span class="project-year-badge">2026</span>
@@ -569,6 +637,84 @@
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CERTIFICATIONS & ACHIEVEMENTS SECTION (Hidden) ==================== -->
+    <section id="certifications" class="section-padding" style="display: none !important;">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag" data-i18n="cert_tag">CHỨNG NHẬN</span>
+          <h2 class="section-title" data-i18n="cert_title">Bằng Cấp & Chứng Chỉ</h2>
+          <p class="section-description" data-i18n="cert_desc">
+            Các chứng nhận chuyên môn, quá trình thực tập và thành tích học tập đạt được.
+          </p>
+        </div>
+
+        <div class="certs-grid">
+          <!-- Cert 1: Software Testing Internship Certificate -->
+          <div class="cert-card tilt-card reveal stagger-1">
+            <div class="cert-icon-wrapper">
+              <i class="fas fa-award"></i>
+            </div>
+            <div class="cert-content">
+              <div class="cert-issuer">Automation Land</div>
+              <h3 class="cert-name" data-i18n="cert1_name">Chứng Nhận Thực Tập Sinh Phần Mềm</h3>
+              <p class="cert-desc" data-i18n="cert1_desc">
+                Hoàn thành xuất sắc kỳ thực tập phát triển & kiểm thử phần mềm, thiết kế test case, kiểm thử API và xác
+                minh sửa lỗi.
+              </p>
+              <div class="cert-date"><i class="far fa-calendar-alt"></i> 04/2026 - 06/2026</div>
+            </div>
+          </div>
+
+          <!-- Cert 2: Software Engineering Degree Candidate -->
+          <div class="cert-card tilt-card reveal stagger-2">
+            <div class="cert-icon-wrapper">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="cert-content">
+              <div class="cert-issuer">ĐH Tài nguyên và Môi trường TP.HCM</div>
+              <h3 class="cert-name" data-i18n="cert2_name">Cử Nhân Kỹ Thuật Phần Mềm</h3>
+              <p class="cert-desc" data-i18n="cert2_desc">
+                Chuyên ngành Kỹ thuật Phần mềm, làm chủ kiến trúc Full-stack, thiết kế CSDL, thuật toán và quy trình
+                phần mềm.
+              </p>
+              <div class="cert-date"><i class="far fa-calendar-alt"></i> 2022 - 04/2027</div>
+            </div>
+          </div>
+
+          <!-- Cert 3: Python & RESTful API Specialization -->
+          <div class="cert-card tilt-card reveal stagger-3">
+            <div class="cert-icon-wrapper">
+              <i class="fab fa-python"></i>
+            </div>
+            <div class="cert-content">
+              <div class="cert-issuer">Chuyên Môn Backend</div>
+              <h3 class="cert-name" data-i18n="cert3_name">Python Flask Microservices & JWT</h3>
+              <p class="cert-desc" data-i18n="cert3_desc">
+                Thành thạo xây dựng RESTful API chuẩn hóa, xác thực phân quyền JWT, mã hóa Bcrypt và kiến trúc Blueprint
+                Flask.
+              </p>
+              <div class="cert-date"><i class="far fa-check-circle"></i> Verified Skill</div>
+            </div>
+          </div>
+
+          <!-- Cert 4: PostgreSQL Database Architecture -->
+          <div class="cert-card tilt-card reveal stagger-4">
+            <div class="cert-icon-wrapper">
+              <i class="fas fa-database"></i>
+            </div>
+            <div class="cert-content">
+              <div class="cert-issuer">Cơ Sở Dữ Liệu</div>
+              <h3 class="cert-name" data-i18n="cert4_name">PostgreSQL & Relational Database Design</h3>
+              <p class="cert-desc" data-i18n="cert4_desc">
+                Thiết kế lược đồ quan hệ, tối ưu câu lệnh SQL, quản lý giao dịch ACID và tích hợp ORM SQLAlchemy.
+              </p>
+              <div class="cert-date"><i class="far fa-check-circle"></i> Verified Skill</div>
             </div>
           </div>
         </div>
@@ -724,12 +870,55 @@
     <i class="fas fa-arrow-up"></i>
   </button>
 
+  <!-- Developer CLI Terminal Console Drawer Modal -->
+  <div class="cli-overlay" id="cliOverlay" onclick="if(event.target===this) closeCLITerminal()">
+    <div class="cli-modal">
+      <div class="cli-header">
+        <div class="cli-dots">
+          <span class="dot dot-red" onclick="closeCLITerminal()" title="Đóng"></span>
+          <span class="dot dot-yellow" title="Thu nhỏ"></span>
+          <span class="dot dot-green" title="Toàn màn hình"></span>
+        </div>
+        <div class="cli-title">
+          <i class="fas fa-terminal"></i> dangkhoa@portfolio:~ (bash v2.5)
+        </div>
+        <button class="cli-close-btn" onclick="closeCLITerminal()" aria-label="Close Terminal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="cli-body" id="cliBody" onclick="document.getElementById('cliInput').focus()">
+        <div class="cli-welcome">
+          <pre class="cli-ascii-art">
+   ___                           _  ___               
+  / _ \  __ _ _ _  __ _ /\/\    | |/ / |__   ___  __ _
+ / /_)/ / _` | ' \/ _` /    \   | ' /| '_ \ / _ \/ _` |
+/ ___/ | (_| | | | (_| / /\/\ \  | . \| | | | (_) | (_| |
+\/      \__,_|_| |\__, \/    \/  |_|\_\_| |_|\___/ \__,_|
+                 |___/                                   
+          </pre>
+          <p>Chào mừng đến với <strong>Developer CLI Terminal</strong> của Đặng Văn Khoa!</p>
+          <p class="cli-tip">💡 Gõ <span class="cli-cmd-highlight">help</span> để xem danh sách câu lệnh khả dụng.</p>
+        </div>
+
+        <div class="cli-output-log" id="cliOutputLog"></div>
+
+        <div class="cli-input-line">
+          <span class="cli-prompt-user">dangkhoa@portfolio:~$</span>
+          <input type="text" id="cliInput" class="cli-input" autocomplete="off" spellcheck="false"
+            placeholder="Nhập câu lệnh...">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Command Palette Modal (Ctrl + K / Cmd + K) -->
   <div class="cmd-overlay" id="cmdOverlay" onclick="if(event.target===this) closeCmdPalette()">
     <div class="cmd-modal">
       <div class="cmd-header">
         <i class="fas fa-search cmd-search-icon"></i>
-        <input type="text" id="cmdInput" class="cmd-input" placeholder="Gõ để tìm phần, dự án hoặc lệnh..." autocomplete="off">
+        <input type="text" id="cmdInput" class="cmd-input" placeholder="Gõ để tìm phần, dự án hoặc lệnh..."
+          autocomplete="off">
         <span class="cmd-esc-badge"><kbd>ESC</kbd></span>
       </div>
       <div class="cmd-body" id="cmdResults">
@@ -744,7 +933,7 @@
   </div>
 
   <!-- Custom JavaScript -->
-  <script src="script.js"></script>
+  <script src="script_v2.js"></script>
 </body>
 
 </html>
