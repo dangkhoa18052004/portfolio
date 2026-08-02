@@ -42,6 +42,9 @@
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 25px rgba(0, 242, 254, 0.25);
+
+  --spotlight-bg: rgba(17, 24, 39, 0.75);
+  --spotlight-glow: rgba(0, 242, 254, 0.08);
 }
 
 /* Scroll Progress Bar at Header Top */
@@ -135,23 +138,67 @@
 [data-theme="light"] {
   --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(241, 245, 249, 0.95);
-  --bg-glass: rgba(0, 0, 0, 0.02);
-  --border-color: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(0, 168, 255, 0.4);
+  --bg-card: rgba(255, 255, 255, 0.94);
+  --bg-card-hover: rgba(241, 245, 249, 0.98);
+  --bg-glass: rgba(0, 0, 0, 0.03);
+  --border-color: rgba(0, 0, 0, 0.12);
+  --border-hover: rgba(2, 132, 199, 0.4);
   
   --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #94a3b8;
+  --text-muted: #334155;
+  --text-dim: #64748b;
   
   --primary-accent: #0284c7;
   --primary-gradient: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
   --glow-color: rgba(2, 132, 199, 0.15);
   
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
   --shadow-glow: 0 0 25px rgba(2, 132, 199, 0.2);
+
+  --spotlight-bg: rgba(255, 255, 255, 0.94);
+  --spotlight-glow: rgba(2, 132, 199, 0.12);
+}
+
+[data-theme="light"] .project-card,
+[data-theme="light"] .cert-card,
+[data-theme="light"] .about-card,
+[data-theme="light"] .skill-category-card,
+[data-theme="light"] .contact-info-card,
+[data-theme="light"] .contact-form-card,
+[data-theme="light"] .modal-card,
+[data-theme="light"] .cv-modal,
+[data-theme="light"] .timeline-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .skill-tag,
+[data-theme="light"] .modal-tech-pill,
+[data-theme="light"] .btn-secondary,
+[data-theme="light"] .btn-copy,
+[data-theme="light"] .preset-chip,
+[data-theme="light"] .btn-cv-view {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #0f172a;
+}
+
+[data-theme="light"] .skill-tag:hover,
+[data-theme="light"] .modal-tech-pill:hover,
+[data-theme="light"] .btn-secondary:hover,
+[data-theme="light"] .btn-copy:hover,
+[data-theme="light"] .preset-chip:hover,
+[data-theme="light"] .btn-cv-view:hover {
+  background: rgba(2, 132, 199, 0.12);
+  border-color: #0284c7;
+  color: #0284c7;
+}
+
+[data-theme="light"] .form-input,
+[data-theme="light"] .form-textarea {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #0f172a;
 }
 
 /* --- Base & Reset --- */
@@ -872,8 +919,8 @@ button {
 .project-card {
   background: radial-gradient(
     600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(0, 242, 254, 0.08),
-    rgba(17, 24, 39, 0.7) 40%
+    var(--spotlight-glow),
+    var(--spotlight-bg) 40%
   );
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -2650,8 +2697,8 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
    ========================================================================== */
 .arch-flow-container {
   margin-top: 1rem;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 242, 254, 0.2);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 1.25rem;
 }
@@ -2667,17 +2714,18 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
 .arch-node {
   flex: 1;
   min-width: 130px;
-  background: rgba(17, 24, 39, 0.9);
-  border: 1px solid rgba(0, 242, 254, 0.25);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   padding: 0.75rem 0.6rem;
   text-align: center;
   transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
 
 .arch-node:hover {
   border-color: var(--primary-accent);
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  box-shadow: 0 0 15px var(--glow-color);
   transform: translateY(-3px);
 }
 
@@ -2696,7 +2744,7 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
 
 .arch-node-desc {
   font-size: 0.7rem;
-  color: var(--text-dim);
+  color: var(--text-muted);
   margin-top: 0.2rem;
 }
 
@@ -2889,8 +2937,8 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
 
 .cv-card:hover {
   border-color: var(--primary-accent);
-  background: rgba(30, 41, 59, 0.6);
-  box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+  background: var(--bg-card-hover);
+  box-shadow: 0 10px 25px var(--glow-color);
   transform: translateY(-4px);
 }
 
