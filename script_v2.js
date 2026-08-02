@@ -108,6 +108,10 @@ const translations = {
     form_message: "Nội dung tin nhắn",
     btn_send: "Gửi Tin Nhắn",
     form_success: "Cảm ơn bạn! Tin nhắn của bạn đã được gửi thành công.",
+    contact_presets_title: "Mẫu tin nhắn nhanh cho Nhà Tuyển Dụng:",
+    preset_interview: "Mời Phỏng Vấn",
+    preset_job: "Cơ Hội Việc Làm",
+    preset_transcript: "Yêu Cầu Hồ Sơ",
 
     // Certifications Section
     cert_tag: "CHỨNG NHẬN",
@@ -131,7 +135,19 @@ const translations = {
     lang_dist: "Phân bổ ngôn ngữ lập trình chính",
 
     // Footer
-    footer_text: "© 2026 Đặng Văn Khoa. Xây dựng với tâm huyết và công nghệ Web hiện đại."
+    footer_text: "© 2026 Đặng Văn Khoa. Xây dựng với tâm huyết và công nghệ Web hiện đại.",
+
+    // CV Selection Modal
+    cv_modal_title: "Chọn Bản CV Đặng Văn Khoa",
+    cv_modal_subtitle: "Tùy chọn phiên bản ngôn ngữ CV bạn muốn xem hoặc tải về",
+    cv_vi_title: "CV Tiếng Việt",
+    cv_vi_sub: "Bản Tiếng Việt",
+    cv_vi_desc: "Hồ sơ năng lực lập trình phần mềm chi tiết bằng Tiếng Việt (PDF)",
+    cv_en_title: "English Resume",
+    cv_en_sub: "Bản Tiếng Anh",
+    cv_en_desc: "Full professional software developer resume in English (PDF)",
+    cv_view: "Xem Online",
+    cv_download: "Tải Về"
   },
 
   en: {
@@ -238,6 +254,10 @@ const translations = {
     form_message: "Your Message",
     btn_send: "Send Message",
     form_success: "Thank you! Your message has been sent successfully.",
+    contact_presets_title: "Quick Message Presets for Recruiters:",
+    preset_interview: "Interview Offer",
+    preset_job: "Job Opportunity",
+    preset_transcript: "Request Resume & Transcript",
 
     // Certifications Section
     cert_tag: "CERTIFICATIONS",
@@ -261,7 +281,19 @@ const translations = {
     lang_dist: "Primary Language Distribution",
 
     // Footer
-    footer_text: "© 2026 Dang Van Khoa. Crafted with care and modern web standards."
+    footer_text: "© 2026 Dang Van Khoa. Crafted with care and modern web standards.",
+
+    // CV Selection Modal
+    cv_modal_title: "Select Resume Version",
+    cv_modal_subtitle: "Choose your preferred language version to view or download",
+    cv_vi_title: "Vietnamese Resume",
+    cv_vi_sub: "Vietnamese Version",
+    cv_vi_desc: "Detailed software development resume in Vietnamese (PDF)",
+    cv_en_title: "English Resume",
+    cv_en_sub: "English Version",
+    cv_en_desc: "Full professional software developer resume in English (PDF)",
+    cv_view: "View Online",
+    cv_download: "Download"
   }
 };
 
@@ -302,6 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Phase 4 CLI Developer Terminal Engine
   initCLITerminal();
+
+  // CV Interactive Spotlight & Particle Burst Effects
+  initCVCardSpotlight();
 });
 
 // --- Language Switcher ---
@@ -443,9 +478,45 @@ function initProjectFilters() {
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     showToast(translations[currentLang].copied_toast || 'Copied!');
+    if (typeof playSound === 'function') playSound('success');
   }).catch(err => {
     console.error('Copy failed', err);
   });
+}
+
+// --- Recruiter Quick Message Presets Helper ---
+function applyContactPreset(type) {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  const subjectInput = form.querySelector('input[name="_subject"]');
+  const messageInput = form.querySelector('textarea[name="message"]');
+  if (!subjectInput || !messageInput) return;
+
+  const isVi = currentLang === 'vi';
+
+  if (type === 'interview') {
+    subjectInput.value = isVi ? "Mời phỏng vấn vị trí Thực tập sinh Phần mềm (Software Intern)" : "Invitation to Interview for Software Engineering Intern";
+    messageInput.value = isVi ?
+      "Chào bạn Đặng Văn Khoa,\n\nChúng tôi đã xem qua Portfolio của bạn và rất ấn tượng với năng lực lập trình Python Flask, ReactJS và PostgreSQL. Chúng tôi muốn mời bạn tham gia buổi phỏng vấn vị trí Thực tập sinh Phát triển Phần mềm tại công ty.\n\nVui lòng phản hồi Email này hoặc liên hệ lại với chúng tôi nhé!" :
+      "Hello Dang Van Khoa,\n\nWe reviewed your Portfolio and are very impressed with your Python Flask, ReactJS, and PostgreSQL skills. We would like to invite you for an interview for the Software Engineering Intern position.\n\nPlease reply to this email or get back to us at your earliest convenience!";
+  } else if (type === 'job') {
+    subjectInput.value = isVi ? "Trao đổi cơ hội tuyển dụng & hợp tác phát triển dự án" : "Job & Project Collaboration Opportunity";
+    messageInput.value = isVi ?
+      "Chào Khoa,\n\nMình đại diện cho đội ngũ kỹ thuật muốn trao đổi với bạn về một số cơ hội công việc và dự án phát triển Web Full-Stack / Backend. Bạn có thể cho mình xin thời gian thuận tiện để trao đổi thêm không?" :
+      "Hello Khoa,\n\nI am representing our tech team and would like to discuss potential Full-Stack / Backend developer opportunities and project collaborations with you. When would be a good time to connect?";
+  } else if (type === 'transcript') {
+    subjectInput.value = isVi ? "Yêu cầu cung cấp thêm Bảng điểm & Hồ sơ cá nhân" : "Request for Academic Transcript & Further Profile Details";
+    messageInput.value = isVi ?
+      "Chào Đặng Văn Khoa,\n\nPhòng Tuyển dụng muốn xin thêm thông tin Bảng điểm quá trình học tập tại HCMUNRE và các bằng cấp liên quan của bạn để hoàn thiện hồ sơ ứng tuyển.\n\nCảm ơn bạn!" :
+      "Hello Dang Van Khoa,\n\nOur HR department would like to request your academic transcript from HCMUNRE and relevant certifications to finalize your application profile.\n\nThank you!";
+  }
+
+  subjectInput.focus();
+  showToast(isVi ? '✨ Đã tự động điền mẫu tin nhắn!' : '✨ Preset message applied!');
+  if (typeof playSound === 'function') playSound('success');
+  if (typeof triggerParticleBurst === 'function') {
+    triggerParticleBurst({ clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 });
+  }
 }
 
 function showToast(message) {
@@ -1335,6 +1406,22 @@ function playSound(type) {
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
       osc.start(now);
       osc.stop(now + 0.07);
+    } else if (type === 'open') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } else if (type === 'success') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15);
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
     }
   } catch (e) {
   }
@@ -1411,6 +1498,85 @@ function closeCmdPalette() {
   if (overlay) overlay.classList.remove('active');
 }
 
+// --- CV Selector Modal Logic & Visual Effects ---
+function openCVModal() {
+  const overlay = document.getElementById('cvModalOverlay');
+  if (!overlay) return;
+  overlay.classList.add('active');
+  if (typeof playSound === 'function') playSound('open');
+  initCVCardSpotlight();
+}
+
+function closeCVModal() {
+  const overlay = document.getElementById('cvModalOverlay');
+  if (overlay) overlay.classList.remove('active');
+}
+
+function initCVCardSpotlight() {
+  const cards = document.querySelectorAll('.cv-card, .project-card, .cert-card, .skill-category-card, .about-card, .timeline-card');
+  cards.forEach(card => {
+    if (card.dataset.spotlightInit) return;
+    card.dataset.spotlightInit = "true";
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+
+  const actionBtns = document.querySelectorAll('.btn-cv-action, .btn-cv-header, .btn-copy, .btn-primary, .btn-secondary, .social-link, .filter-btn');
+  actionBtns.forEach(btn => {
+    if (btn.dataset.burstInit) return;
+    btn.dataset.burstInit = "true";
+    btn.addEventListener('click', (e) => {
+      triggerParticleBurst(e);
+      if (typeof playSound === 'function') playSound('click');
+    });
+  });
+}
+
+function triggerParticleBurst(e) {
+  const x = e.clientX || window.innerWidth / 2;
+  const y = e.clientY || window.innerHeight / 2;
+  const particleCount = 18;
+  const colors = ['#00f2fe', '#4facfe', '#10b981', '#ffffff', '#7f53ac'];
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'tech-particle';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.random() * 6 + 4;
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 70 + 20;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.background = color;
+    particle.style.boxShadow = `0 0 10px ${color}`;
+    particle.style.setProperty('--tx', `${tx}px`);
+    particle.style.setProperty('--ty', `${ty}px`);
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 850);
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCVModal();
+  }
+});
+
 function getCmdData() {
   const isVi = currentLang === 'vi';
   return [
@@ -1437,7 +1603,9 @@ function getCmdData() {
       group: isVi ? 'Hành Động Nhanh' : 'Quick Actions',
       items: [
         { icon: 'fa-terminal', title: isVi ? 'Mở Developer CLI Terminal' : 'Open Developer CLI Terminal', action: () => { closeCmdPalette(); openCLITerminal(); } },
-        { icon: 'fa-file-download', title: isVi ? 'Tải CV Đặng Văn Khoa (PDF)' : 'Download CV (PDF)', action: () => { window.open('./CV_Dang_Van_Khoa.pdf', '_blank'); closeCmdPalette(); } },
+        { icon: 'fa-file-pdf', title: isVi ? 'Tải / Xem CV (Tiếng Việt & English)' : 'Download / View CV (VI & EN)', action: () => { closeCmdPalette(); openCVModal(); } },
+        { icon: 'fa-flag', title: isVi ? 'Mở CV Tiếng Việt (PDF)' : 'Open Vietnamese Resume (PDF)', action: () => { window.open('./CV_DANGVANKHOA_VI.pdf', '_blank'); closeCmdPalette(); } },
+        { icon: 'fa-globe-americas', title: isVi ? 'Mở English Resume (PDF)' : 'Open English Resume (PDF)', action: () => { window.open('./CV_DANG_VAN_KHOA_EN.pdf', '_blank'); closeCmdPalette(); } },
         { icon: 'fa-globe', title: isVi ? 'Chuyển sang Tiếng Anh (English)' : 'Switch Language to English', action: () => { setLanguage('en'); closeCmdPalette(); } },
         { icon: 'fa-globe-asia', title: isVi ? 'Chuyển sang Tiếng Việt (Vietnamese)' : 'Switch Language to Vietnamese', action: () => { setLanguage('vi'); closeCmdPalette(); } },
         { icon: 'fa-adjust', title: isVi ? 'Bật/Tắt Giao Diện Dark/Light' : 'Toggle Dark/Light Theme', action: () => { document.getElementById('themeToggle').click(); closeCmdPalette(); } }
@@ -1634,7 +1802,9 @@ function handleCLICommand(rawCmd) {
 • <span class="cli-cmd-highlight">skills</span>     : Danh sách ngôn ngữ & công nghệ chuyên môn
 • <span class="cli-cmd-highlight">projects</span>   : Các dự án thực chiến nổi bật (AHP, SPA, DLKB)
 • <span class="cli-cmd-highlight">contact</span>    : Thông tin liên hệ, Email, SĐT, GitHub
-• <span class="cli-cmd-highlight">cv</span>         : Tải trực tiếp hồ sơ CV (PDF)
+• <span class="cli-cmd-highlight">cv</span>         : Tùy chọn xem & tải CV (Tiếng Việt / English)
+• <span class="cli-cmd-highlight">cv vi</span>      : Mở trực tiếp bản CV Tiếng Việt
+• <span class="cli-cmd-highlight">cv en</span>      : Mở trực tiếp bản English Resume
 • <span class="cli-cmd-highlight">matrix</span>     : Bật/Tắt giao diện Hacker Matrix Mode
 • <span class="cli-cmd-highlight">theme</span>      : Chuyển đổi giữa Dark / Light theme
 • <span class="cli-cmd-highlight">sudo hire-me</span>: Gửi yêu cầu tuyển dụng đặc biệt
@@ -1686,8 +1856,22 @@ function handleCLICommand(rawCmd) {
       break;
 
     case 'cv':
-      window.open('./CV_Dang_Van_Khoa.pdf', '_blank');
-      outputHtml = `<div class="cli-log-success">📄 Đã mở file CV_Dang_Van_Khoa.pdf thành công!</div>`;
+    case 'cv vi':
+    case 'cv en':
+      if (cmd === 'cv vi') {
+        window.open('./CV_DANGVANKHOA_VI.pdf', '_blank');
+        outputHtml = `<div class="cli-log-success">📄 Đã mở file CV Tiếng Việt (CV_DANGVANKHOA_VI.pdf) thành công!</div>`;
+      } else if (cmd === 'cv en') {
+        window.open('./CV_DANG_VAN_KHOA_EN.pdf', '_blank');
+        outputHtml = `<div class="cli-log-success">📄 Đã mở file English Resume (CV_DANG_VAN_KHOA_EN.pdf) thành công!</div>`;
+      } else {
+        openCVModal();
+        outputHtml = `
+<div class="cli-log-success">📄 Đã mở cửa sổ lựa chọn CV (Tiếng Việt & English)!</div>
+• <span class="cli-cmd-highlight">cv vi</span> : Mở trực tiếp CV Tiếng Việt
+• <span class="cli-cmd-highlight">cv en</span> : Mở trực tiếp English Resume
+`;
+      }
       break;
 
     case 'sudo hire-me':

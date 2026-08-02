@@ -214,10 +214,18 @@ button {
 }
 
 .text-gradient {
-  background: var(--primary-gradient);
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 35%, #10b981 70%, #7f53ac 100%);
+  background-size: 250% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  animation: textGradientWave 5s ease infinite;
+}
+
+@keyframes textGradientWave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* --- Header & Navigation --- */
@@ -365,6 +373,8 @@ button {
 }
 
 .btn-cv-header {
+  position: relative;
+  overflow: hidden;
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius-full);
   background: transparent;
@@ -378,6 +388,29 @@ button {
   white-space: nowrap;
   flex-shrink: 0;
   transition: all var(--transition-fast);
+}
+
+.btn-cv-header::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: rotate(25deg);
+  animation: shimmerSweep 4.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerSweep {
+  0% { left: -75%; }
+  20%, 100% { left: 125%; }
 }
 
 .btn-cv-header:hover {
@@ -565,7 +598,24 @@ button {
   background: var(--primary-gradient);
   padding: 6px;
   animation: morph 8s ease-in-out infinite;
-  box-shadow: var(--shadow-glow);
+  box-shadow: 0 0 30px rgba(0, 242, 254, 0.4), 0 0 60px rgba(127, 83, 172, 0.2);
+}
+
+.avatar-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  background: conic-gradient(from 0deg, var(--primary-accent), #7f53ac, #10b981, var(--primary-accent));
+  z-index: -1;
+  animation: morph 8s ease-in-out infinite, spinRing 10s linear infinite;
+  filter: blur(12px);
+  opacity: 0.65;
+}
+
+@keyframes spinRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes morph {
@@ -820,7 +870,11 @@ button {
 }
 
 .project-card {
-  background: var(--bg-card);
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 242, 254, 0.08),
+    rgba(17, 24, 39, 0.7) 40%
+  );
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -828,12 +882,30 @@ button {
   transition: all var(--transition-normal);
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
 }
 
 .project-card:hover {
-  border-color: var(--border-hover);
+  border-color: var(--primary-accent);
   transform: translateY(-8px);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 242, 254, 0.25);
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-img-wrapper {
@@ -989,7 +1061,25 @@ button {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--border-color);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.timeline-list::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--primary-accent), var(--emerald-accent), transparent);
+  background-size: 100% 200%;
+  animation: timelineLaserStream 3.5s linear infinite;
+  box-shadow: 0 0 10px var(--primary-accent);
+}
+
+@keyframes timelineLaserStream {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 200%; }
 }
 
 .timeline-item {
@@ -2660,5 +2750,316 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
   from { opacity: 0; transform: translateX(50px) scale(0.9); }
   to { opacity: 1; transform: translateX(0) scale(1); }
 }
+
+/* ==========================================================================
+   CV SELECTION MODAL STYLES
+   ========================================================================== */
+.cv-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 10, 20, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 3500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+}
+
+.cv-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cv-modal {
+  width: 100%;
+  max-width: 680px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(0, 242, 254, 0.35);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 242, 254, 0.2);
+  overflow: hidden;
+  transform: translateY(-20px) scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.cv-overlay.active .cv-modal {
+  transform: translateY(0) scale(1);
+}
+
+.cv-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cv-modal-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cv-modal-icon {
+  font-size: 1.6rem;
+  color: var(--primary-accent);
+  background: rgba(0, 242, 254, 0.12);
+  padding: 0.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.cv-modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.cv-modal-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.cv-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.cv-close-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+  transform: rotate(90deg);
+}
+
+.cv-modal-body {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.cv-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cv-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cv-card:hover {
+  border-color: var(--primary-accent);
+  background: rgba(30, 41, 59, 0.6);
+  box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+  transform: translateY(-4px);
+}
+
+.cv-card:hover::before {
+  opacity: 1;
+}
+
+.cv-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cv-flag {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.cv-card-info h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.cv-lang-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary-accent);
+  background: rgba(0, 242, 254, 0.1);
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+.cv-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.cv-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.btn-cv-action {
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
+  text-align: center;
+  cursor: pointer;
+}
+
+.btn-cv-view {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.btn-cv-view:hover {
+  background: rgba(0, 242, 254, 0.15);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+.btn-cv-download {
+  background: var(--primary-gradient);
+  border: 1px solid transparent;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+}
+
+.btn-cv-download:hover {
+  box-shadow: 0 6px 18px rgba(0, 242, 254, 0.4);
+  transform: translateY(-1px);
+}
+
+/* --- Interactive Mouse Spotlight Glow for CV Cards --- */
+.cv-card {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 242, 254, 0.08),
+    rgba(255, 255, 255, 0.02) 40%
+  );
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Particle Burst Animation Elements --- */
+.tech-particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9999;
+  animation: particleFly 0.8s cubic-bezier(0.12, 0.8, 0.32, 1) forwards;
+}
+
+@keyframes particleFly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0);
+  }
+}
+
+/* --- Floating Quick CV Shortcut Button (FAB) --- */
+/* --- Recruiter Quick Message Presets Styling --- */
+.preset-chips-wrapper {
+  margin-bottom: 1.25rem;
+  background: rgba(0, 242, 254, 0.05);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+}
+
+.preset-chips-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary-accent);
+  display: block;
+  margin-bottom: 0.55rem;
+}
+
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.preset-chip {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-chip:hover {
+  background: rgba(0, 242, 254, 0.18);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+  transform: translateY(-2px);
+}
+
+
+
 
 

@@ -47,7 +47,7 @@
         <a href="#experience" class="nav-link" data-i18n="nav_experience">Kinh Nghiệm</a>
         <a href="#education" class="nav-link" data-i18n="nav_education" hidden>Học Vấn</a>
         <a href="#contact" class="nav-link" data-i18n="nav_contact">Liên Hệ</a>
-        <a href="./CV_Dang_Van_Khoa.pdf" download="CV_Dang_Van_Khoa.pdf" class="nav-link mobile-cv-link"><i
+        <a href="javascript:void(0)" onclick="openCVModal()" class="nav-link mobile-cv-link"><i
             class="fas fa-file-download"></i> <span data-i18n="btn_download_cv">Tải CV</span></a>
       </nav>
 
@@ -84,11 +84,12 @@
           <i class="fas fa-sun"></i>
         </button>
 
-        <!-- Download CV Button -->
-        <a href="./CV_Dang_Van_Khoa.pdf" download="CV_Dang_Van_Khoa.pdf" class="btn-cv-header">
+        <!-- Download / Select CV Button -->
+        <button type="button" onclick="openCVModal()" class="btn-cv-header" id="headerCvBtn"
+          title="Xem & Tải CV (Tiếng Việt & English)">
           <i class="fas fa-file-download"></i>
           <span data-i18n="btn_download_cv">Tải CV</span>
-        </a>
+        </button>
 
         <!-- Mobile Menu Toggle -->
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu">
@@ -798,6 +799,20 @@
               <input type="hidden" name="_captcha" value="false">
               <input type="hidden" name="_next" value="https://github.com/dangkhoa18052004/portfolio">
 
+              <!-- Recruiter Quick Message Presets -->
+              <div class="preset-chips-wrapper">
+                <span class="preset-chips-label"><i class="fas fa-magic"></i> <span
+                    data-i18n="contact_presets_title">Mẫu tin nhắn nhanh cho Nhà Tuyển Dụng:</span></span>
+                <div class="preset-chips">
+                  <button type="button" class="preset-chip" onclick="applyContactPreset('interview')"><span
+                      data-i18n="preset_interview">Mời Phỏng Vấn</span></button>
+                  <button type="button" class="preset-chip" onclick="applyContactPreset('job')"><span
+                      data-i18n="preset_job">Cơ Hội Việc Làm</span></button>
+                  <button type="button" class="preset-chip" onclick="applyContactPreset('transcript')"><span
+                      data-i18n="preset_transcript">Yêu Cầu Hồ Sơ</span></button>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label class="form-label" data-i18n="form_name">Họ và Tên</label>
                 <input type="text" name="name" class="form-input" required data-i18n-placeholder="form_name"
@@ -909,6 +924,70 @@
           <span class="cli-prompt-user">dangkhoa@portfolio:~$</span>
           <input type="text" id="cliInput" class="cli-input" autocomplete="off" spellcheck="false"
             placeholder="Nhập câu lệnh...">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV Selection Modal Overlay -->
+  <div class="cv-overlay" id="cvModalOverlay" onclick="if(event.target===this) closeCVModal()">
+    <div class="cv-modal">
+      <div class="cv-modal-header">
+        <div class="cv-modal-title-wrapper">
+          <i class="fas fa-file-pdf cv-modal-icon"></i>
+          <div>
+            <h3 class="cv-modal-title" data-i18n="cv_modal_title">Chọn Bản CV / Select Resume</h3>
+            <p class="cv-modal-subtitle" data-i18n="cv_modal_subtitle">Tùy chọn phiên bản ngôn ngữ bạn muốn xem hoặc tải
+              về</p>
+          </div>
+        </div>
+        <button class="cv-close-btn" onclick="closeCVModal()" aria-label="Close CV Modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="cv-modal-body">
+        <!-- Vietnamese CV Card -->
+        <div class="cv-card tilt-card">
+          <div class="cv-card-header">
+            <span class="cv-flag">🇻🇳</span>
+            <div class="cv-card-info">
+              <h4 data-i18n="cv_vi_title">CV Tiếng Việt</h4>
+              <span class="cv-lang-tag" data-i18n="cv_vi_sub">Bản Tiếng Việt</span>
+            </div>
+          </div>
+          <p class="cv-card-desc" data-i18n="cv_vi_desc">Hồ sơ năng lực lập trình phần mềm chi tiết bằng Tiếng Việt
+            (PDF)</p>
+          <div class="cv-card-actions">
+            <a href="./CV_DANGVANKHOA_VI.pdf" target="_blank" class="btn-cv-action btn-cv-view">
+              <i class="fas fa-eye"></i> <span data-i18n="cv_view">Xem Online</span>
+            </a>
+            <a href="./CV_DANGVANKHOA_VI.pdf" download="CV_DANGVANKHOA_VI.pdf" class="btn-cv-action btn-cv-download">
+              <i class="fas fa-download"></i> <span data-i18n="cv_download">Tải Về</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- English CV Card -->
+        <div class="cv-card tilt-card">
+          <div class="cv-card-header">
+            <span class="cv-flag">🇬🇧</span>
+            <div class="cv-card-info">
+              <h4 data-i18n="cv_en_title">English Resume</h4>
+              <span class="cv-lang-tag" data-i18n="cv_en_sub">Bản Tiếng Anh</span>
+            </div>
+          </div>
+          <p class="cv-card-desc" data-i18n="cv_en_desc">Full professional software developer resume in English (PDF)
+          </p>
+          <div class="cv-card-actions">
+            <a href="./CV_DANG_VAN_KHOA_EN.pdf" target="_blank" class="btn-cv-action btn-cv-view">
+              <i class="fas fa-eye"></i> <span data-i18n="cv_view">Xem Online</span>
+            </a>
+            <a href="./CV_DANG_VAN_KHOA_EN.pdf" download="CV_DANG_VAN_KHOA_EN.pdf"
+              class="btn-cv-action btn-cv-download">
+              <i class="fas fa-download"></i> <span data-i18n="cv_download">Tải Về</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
