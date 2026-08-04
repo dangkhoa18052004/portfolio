@@ -281,7 +281,7 @@ const translations = {
     lang_dist: "Primary Language Distribution",
 
     // Footer
-    footer_text: "© 2026 Dang Van Khoa. Crafted with care and modern web standards.",
+    footer_text: "© 2026 Dang Van Khoa.",
 
     // CV Selection Modal
     cv_modal_title: "Select Resume Version",

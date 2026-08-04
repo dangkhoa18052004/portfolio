@@ -2782,10 +2782,10 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
   align-items: center;
   gap: 0.75rem;
   padding: 0.85rem 1.25rem;
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--bg-secondary);
   border: 1px solid var(--primary-accent);
   border-radius: var(--radius-md);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.3);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
   color: var(--text-main);
   font-size: 0.9rem;
   font-weight: 500;
@@ -3106,7 +3106,6 @@ body.matrix-mode .cli-body, body.matrix-mode .cli-ascii-art {
   color: var(--primary-accent);
   transform: translateY(-2px);
 }
-
 
 
 
